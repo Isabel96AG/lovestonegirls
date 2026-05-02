@@ -1,15 +1,11 @@
 <!--begin::Logo image-->
-<a routerLink="/dashboard">
-  <ng-container *ngIf="currentLayoutType === 'dark-sidebar'">
-    <img alt="Logo" src="./assets/media/logos/default-dark.svg" class="h-25px app-sidebar-logo-default" />
-  </ng-container>
-  <ng-container *ngIf="currentLayoutType !== 'dark-sidebar'">
-    <img alt="Logo" src="./assets/media/logos/default.svg" class="h-25px app-sidebar-logo-default theme-light-show" />
-    <img alt="Logo" src="./assets/media/logos/default-dark.svg"
-      class="h-25px app-sidebar-logo-default theme-dark-show" />
-  </ng-container>
+<a routerLink="/dashboard" class="d-flex align-items-center text-decoration-none app-sidebar-logo-default">
+  <app-keenicon name="heart" class="fs-2x text-danger me-2"></app-keenicon>
+  <span class="fs-4 fw-bolder text-white">LovestonedGirls</span>
+</a>
 
-  <img alt="Logo" src="./assets/media/logos/default-small.svg" class="h-20px app-sidebar-logo-minimize" />
+<a routerLink="/dashboard" class="app-sidebar-logo-minimize text-decoration-none">
+  <app-keenicon name="heart" class="fs-2x text-danger"></app-keenicon>
 </a>
 <!--end::Logo image-->
 

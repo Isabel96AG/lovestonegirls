@@ -1,1 +1,313 @@
-/* You can add global styles to this file, and also import other style files */
+/* ============================================================
+   LovestonedGirls — overrides de tema (estilo neutro/minimalista)
+   Inspirado en estética susmies.com
+   ============================================================ */
+
+/* Tipografía única para toda la web — estilo susmies */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Aplicar Inter a TODO excepto iconos */
+html, body,
+input, button, textarea, select,
+p, span, a, label, div, li, td, th,
+h1, h2, h3, h4, h5, h6,
+.tp-section-title,
+.tp-banner-title,
+.tp-slider-title,
+.tp-blog-title,
+.tp-product-category-title,
+.tp-subscribe-title,
+.tp-preloader-title,
+.tp-feature-title {
+   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+}
+
+/* IMPORTANTE: NO tocar las fuentes de iconos — los rompería */
+i[class*="fa-"],
+i[class*="fa "],
+.fa, .fas, .far, .fab, .fal, .fad, .fa-solid, .fa-regular, .fa-brands, .fa-light, .fa-duotone,
+[class*="ki-"], .keenicon {
+   font-family: inherit !important;       /* heredan de Font Awesome / Keenicons (no Inter) */
+}
+i[class*="fa-"]:before,
+i[class*="fa "]:before,
+.fa:before, .fas:before, .far:before, .fab:before, .fal:before, .fad:before {
+   font-family: "Font Awesome 6 Pro", "Font Awesome 6 Free", "Font Awesome 6 Brands", "FontAwesome", sans-serif !important;
+}
+
+body {
+   color: #1a1a1a !important;
+   background: #fafaf7 !important;
+   font-weight: 400 !important;
+}
+
+.tp-section-title,
+.tp-banner-title,
+.tp-slider-title,
+.tp-blog-title,
+.tp-product-category-title,
+h1, h2, h3, h4 {
+   color: #1a1a1a !important;
+   letter-spacing: -0.5px !important;
+   font-weight: 600 !important;
+}
+
+/* Reemplazo del color de marca (rosa fucsia → neutro) */
+.green-dark-bg {
+   background: #e8e4dc !important;     /* beige cálido en lugar del verde oscuro */
+}
+.green-dark-bg .tp-slider-title,
+.green-dark-bg p,
+.green-dark-bg span {
+   color: #1a1a1a !important;
+}
+.green-dark-bg .tp-btn-white {
+   background: #1a1a1a !important;
+   color: #fff !important;
+   border: none !important;
+}
+
+.tp-btn-2,
+.tp-btn,
+.tp-btn-blue {
+   background: #1a1a1a !important;
+   color: #fff !important;
+   border-radius: 0 !important;
+   font-weight: 500 !important;
+   letter-spacing: 0.5px !important;
+   text-transform: uppercase !important;
+   font-size: 0.85rem !important;
+}
+.tp-btn-2:hover,
+.tp-btn:hover {
+   background: #444 !important;
+}
+
+/* Tarjetas más limpias */
+.tp-product-category-item,
+.tp-blog-item,
+.tp-banner-item {
+   background: transparent !important;
+}
+.tp-product-category-title a:hover,
+.tp-blog-title a:hover {
+   color: #c9a78a !important;        /* hover dorado/beige */
+}
+
+/* Footer más limpio */
+.tp-footer-area {
+   background: #fafaf7 !important;
+   border-top: 1px solid #ececec !important;
+}
+.tp-footer-desc,
+.tp-footer-widget-content p {
+   color: #555 !important;
+}
+
+/* Preloader en blanco/neutro */
+#loading {
+   background: #fafaf7 !important;
+}
+.tp-preloader-content {
+   text-align: center !important;
+}
+.tp-preloader-logo {
+   position: relative !important;
+   display: flex !important;
+   align-items: center !important;
+   justify-content: center !important;
+   width: 190px !important;
+   height: 190px !important;
+   margin: 0 auto !important;
+}
+.tp-preloader-logo > svg:not(.tp-preloader-circle svg) {
+   position: absolute !important;
+   top: 50% !important;
+   left: 50% !important;
+   transform: translate(-50%, -50%) !important;
+   width: 60px !important;
+   height: 60px !important;
+}
+.tp-preloader-circle {
+   position: absolute !important;
+   inset: 0 !important;
+}
+.tp-preloader-title {
+   font-family: 'Inter', sans-serif !important;
+   color: #1a1a1a !important;
+   font-weight: 600 !important;
+   font-size: 1.2rem !important;
+   letter-spacing: 1px !important;
+   text-transform: uppercase !important;
+   margin-top: 20px !important;
+}
+.tp-preloader-subtitle {
+   color: #888 !important;
+   text-transform: uppercase !important;
+   letter-spacing: 2px !important;
+   font-size: 0.7rem !important;
+   margin-top: 4px !important;
+}
+
+/* Inputs más sobrios */
+input[type="text"], input[type="email"], input[type="password"], input[type="number"], select {
+   border-radius: 0 !important;
+   border: 1px solid #ddd !important;
+}
+input:focus, select:focus {
+   border-color: #1a1a1a !important;
+   outline: none !important;
+   box-shadow: none !important;
+}
+
+/* Sustituir el azul del template (#0989FF) por la paleta neutra */
+:root {
+   --tp-theme-primary: #1a1a1a !important;
+   --tp-theme-1: #1a1a1a !important;
+}
+
+/* Búsqueda del header — borde y botón */
+.tp-header-search-form,
+.tp-header-search-wrapper,
+.tp-header-search-input {
+   border-color: #1a1a1a !important;
+}
+.tp-header-search-btn,
+button.tp-header-search-btn,
+.tp-search-btn,
+.tp-header-search-area button {
+   background-color: #1a1a1a !important;
+   border-color: #1a1a1a !important;
+   color: #fff !important;
+}
+
+/* "All Departments" */
+.tp-header-category,
+.tp-header-category-toggle,
+.tp-header-category-menu-btn,
+.tp-category-menu-btn {
+   background-color: #1a1a1a !important;
+   color: #fff !important;
+}
+
+/* Submenús con color azul (chevron, hover) */
+.tp-header-bottom-area .tp-header-action-item .tp-header-action-badge,
+.tp-cart-info-area .tp-header-action-badge,
+.tp-header-action-badge {
+   background-color: #c9a78a !important;     /* badge dorado/beige */
+   color: #fff !important;
+}
+
+/* Hovers en el menú principal */
+.tp-main-menu nav ul li > a:hover,
+.tp-main-menu nav ul li.has-dropdown:hover > a {
+   color: #c9a78a !important;
+}
+
+/* Iconos del menú (carrito, login, etc.) */
+.tp-header-action-icon a:hover,
+.tp-header-action-icon svg:hover {
+   color: #1a1a1a !important;
+}
+
+/* Cualquier elemento que use directamente el azul */
+[style*="background-color: rgb(9, 137, 255)"],
+[style*="background-color:#0989FF"],
+[style*="background:#0989FF"] {
+   background-color: #1a1a1a !important;
+   background: #1a1a1a !important;
+}
+
+/* Newsletter (subscribe area) limpio sin avatar ni shapes */
+.tp-subscribe-area {
+   background: #f4ede4 !important;     /* beige claro */
+}
+.tp-subscribe-area .tp-subscribe-shape,
+.tp-subscribe-area .tp-subscribe-plane {
+   display: none !important;
+}
+.tp-subscribe-title {
+   color: #1a1a1a !important;
+   font-family: 'Playfair Display', Georgia, serif !important;
+   font-size: 2rem !important;
+}
+.tp-subscribe-content span {
+   color: #666 !important;
+}
+.tp-subscribe-input input {
+   background: #fff !important;
+   border: 1px solid #ddd !important;
+   color: #1a1a1a !important;
+   padding: 16px 24px !important;
+   border-radius: 0 !important;
+   width: 100% !important;
+}
+.tp-subscribe-input button {
+   background: #1a1a1a !important;
+   color: #fff !important;
+   border: none !important;
+   padding: 16px 30px !important;
+   font-weight: 500 !important;
+   text-transform: uppercase !important;
+   letter-spacing: 1px !important;
+   font-size: 0.85rem !important;
+   border-radius: 0 !important;
+}
+.tp-subscribe-input button:hover {
+   background: #333 !important;
+}
+
+/* Slider — tamaños y línea decorativa */
+.tp-slider-content > span {
+   font-size: 0.95rem !important;
+   text-transform: uppercase !important;
+   letter-spacing: 2px !important;
+   color: #555 !important;
+}
+.tp-slider-content .tp-slider-title {
+   font-size: 2.6rem !important;       /* en lugar de gigante */
+   line-height: 1.15 !important;
+   font-weight: 600 !important;
+   margin: 16px 0 !important;
+}
+.tp-slider-content p {
+   font-size: 1rem !important;
+   line-height: 1.6 !important;
+   color: #555 !important;
+   margin-bottom: 30px !important;
+}
+/* Ocultar la rayita SVG decorativa que queda fea con el texto cambiado */
+.tp-slider-content p span svg {
+   display: none !important;
+}
+.tp-slider-content p span {
+   color: #1a1a1a !important;
+   font-weight: 600 !important;
+}
+
+/* Ocultar SVGs decorativos (rayas/curvas) dentro de los títulos de sección */
+.tp-section-title svg,
+.tp-section-title-wrapper svg,
+.tp-banner-title svg,
+.tp-blog-title svg {
+   display: none !important;
+}
+
+/* Slider — altura uniforme y overflow controlado para que no se vean otros slides */
+.tp-slider-area,
+.tp-slider-active,
+.tp-slider-active .swiper-wrapper {
+   overflow: hidden !important;
+}
+.tp-slider-item,
+.tp-slider-item.tp-slider-height {
+   min-height: 620px !important;
+   max-height: 620px !important;
+   height: 620px !important;
+}
+.tp-slider-thumb img {
+   max-height: 540px !important;
+   height: 540px !important;
+   width: 100% !important;
+   object-fit: cover !important;
+}

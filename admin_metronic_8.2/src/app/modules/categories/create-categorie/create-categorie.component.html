@@ -1,0 +1,67 @@
+<div class="card">
+    <!--begin::Card body-->
+    <div class="card-body border-top p-9">
+     <div class="row mb-6">
+                    <!--begin::Label-->
+                      <!--begin::Col-->
+                    <div class="col-lg-4 fv-row fv-plugins-icon-container">
+                         <label class="fw-semibold fs-6 py-2">Nombre</label>
+                    <!--end::Label-->
+                        <input type="text" name="name" class="form-control form-control-lg form-control-solid" placeholder=" Por ejemplo: Pantalones" >
+                    </div>
+                    <!--end::Col-->
+                      <div class="col-lg-4 fv-row fv-plugins-icon-container">
+                         <label class="fw-semibold fs-6 py-2">Icon</label>
+                    <!--end::Label-->
+                        <input type="text" name="icon" class="form-control form-control-lg form-control-solid" placeholder=" Por ejemplo: Pantalones" >
+                    </div>
+     </div>
+       <div class="row mb-6 align-items-center">
+            <div class="col-lg-6 col-md-6 col-sm-12 my-2">
+                <label class="form-label fw-semibold fs-6 py-2">Sube tu imagen: *</label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="customFile" accept=".jpeg, .bmp, .jpg, .png, .gif, .webp" (change)="processFile($event)">
+                    <label class="custom-file-label" for="customFile">Choose file</label>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 my-2 text-center">
+                <label class="form-label fw-semibold fs-6 py-2 d-block">Vista previa</label>
+                <div class="image-preview-wrapper d-inline-block p-3 bg-light rounded shadow-sm" style="border: 2px dashed #d9d9d9;">
+                    <img [src]="imagen_previsualiza || 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=300&h=300&fit=crop&q=80'"
+                         alt="Vista previa de la categoría"
+                         class="rounded"
+                         style="width: 200px; height: 200px; object-fit: cover;">
+                </div>
+            </div>
+               <div class="col-lg-4 fv-row fv-plugins-icon-container">
+                         <label class="fw-semibold fs-6 py-2">Posicion</label>
+                    <!--end::Label-->
+                        <input type="number" name="position" class="form-control form-control-lg form-control-solid" placeholder=" Por ejemplo: 2" >
+                    </div>
+        </div>
+
+        <div class="row mb-6">
+            <div class="col-lg-6 col-md-6 col-sm-12 my-2">
+                <label class="fw-semibold fs-6 py-2">Departamento:</label>
+                <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="departamento"
+                    placeholder="Selec. Departamento"
+                >
+                    <option value="">Todos</option>
+                </select>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 my-2">
+                <label class="fw-semibold fs-6 py-2">Categoria:</label>
+                <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="categorie"
+                    placeholder="Selec. Categoria"
+                >
+                    <option value="">Todos</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <!--end::Card body-->
+</div>
