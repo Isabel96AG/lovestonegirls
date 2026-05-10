@@ -1,0 +1,50 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h2 class="fw-bolder">Propiedades de {{ attribute?.name }}</h2>
+        <div class="btn btn-icon btn-sm btn-active-icon-primary" (click)="modal.dismiss()">
+            <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+        </div>
+    </div>
+    <div class="modal-body mx-5 my-5">
+
+        <!-- Añadir nueva propiedad -->
+        <div class="d-flex gap-3 mb-7">
+            <input type="text" class="form-control form-control-solid" placeholder="Ej: XS, S, M, Negro, Blanco..."
+                [(ngModel)]="newProperty" (keyup.enter)="addProperty()" />
+            <button type="button" class="btn btn-primary" (click)="addProperty()">Añadir</button>
+        </div>
+
+        <!-- Listado de propiedades existentes -->
+        <div *ngIf="properties.length > 0">
+            <table class="table align-middle table-row-dashed fs-6 gy-3">
+                <thead>
+                    <tr class="text-muted fw-bold fs-7 text-uppercase">
+                        <th>Nombre</th>
+                        <th class="text-end">Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let prop of properties; let i = index">
+                        <td class="fw-semibold">{{ prop.name }}</td>
+                        <td class="text-end">
+                            <a href="#" onclick="return false;" (click)="deleteProperty(prop, i)"
+                                class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm">
+                                <i class="ki-duotone ki-trash fs-2">
+                                    <span class="path1"></span><span class="path2"></span>
+                                    <span class="path3"></span><span class="path4"></span><span class="path5"></span>
+                                </i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div *ngIf="properties.length === 0" class="text-center text-muted py-5">
+            Aún no hay propiedades. Añade la primera arriba.
+        </div>
+    </div>
+    <div class="modal-footer justify-content-end">
+        <button type="button" class="btn btn-light" (click)="modal.close()">Cerrar</button>
+    </div>
+</div>

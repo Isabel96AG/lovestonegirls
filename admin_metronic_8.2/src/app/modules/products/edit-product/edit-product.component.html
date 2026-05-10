@@ -1,0 +1,97 @@
+<div class="card">
+    <div class="card-header border-0 pt-6">
+        <h2 class="fw-bolder">Editar Producto</h2>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="fv-row mb-7">
+                    <label class="required fw-bold fs-6 mb-2">Título</label>
+                    <input type="text" class="form-control form-control-solid" placeholder="Nombre de la prenda"
+                        [(ngModel)]="title" />
+                </div>
+
+                <div class="fv-row mb-7">
+                    <label class="required fw-bold fs-6 mb-2">Precio (€)</label>
+                    <input type="number" class="form-control form-control-solid" placeholder="0.00"
+                        [(ngModel)]="price" />
+                </div>
+
+                <div class="fv-row mb-7">
+                    <label class="fw-bold fs-6 mb-2">Descripción</label>
+                    <textarea class="form-control form-control-solid" rows="4"
+                        placeholder="Describe la prenda, su estado, material..."
+                        [(ngModel)]="description"></textarea>
+                </div>
+
+                <!-- Talla y Color dinámicos -->
+                <div class="row mb-7" *ngIf="attributes.length > 0">
+                    <div class="col-md-6" *ngFor="let attr of attributes">
+                        <label class="fw-bold fs-6 mb-2">{{ attr.name }}</label>
+                        <select class="form-control form-select-solid" [(ngModel)]="selectedVariations[attr.id]">
+                            <option value="">Seleccionar {{ attr.name }}</option>
+                            <option *ngFor="let prop of attr.properties" [value]="prop.id + ''">{{ prop.name }}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-7">
+                    <div class="col-md-4">
+                        <label class="fw-bold fs-6 mb-2">Departamento</label>
+                        <select class="form-control form-select-solid" [(ngModel)]="categorie_first_id" (ngModelChange)="onChangeFirst()">
+                            <option value="">Seleccionar</option>
+                            <option *ngFor="let c of categories_first" [value]="c.id">{{ c.name }}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="fw-bold fs-6 mb-2">Categoría</label>
+                        <select class="form-control form-select-solid" [(ngModel)]="categorie_second_id" (ngModelChange)="onChangeSecond()">
+                            <option value="">Seleccionar</option>
+                            <option *ngFor="let c of categories_seconds_filtered" [value]="c.id">{{ c.name }}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="fw-bold fs-6 mb-2">Subcategoría</label>
+                        <select class="form-control form-select-solid" [(ngModel)]="categorie_third_id">
+                            <option value="">Seleccionar</option>
+                            <option *ngFor="let c of categories_thirds_filtered" [value]="c.id">{{ c.name }}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="fv-row mb-7">
+                    <label class="fw-bold fs-6 mb-2">Estado</label>
+                    <select class="form-control form-select-solid" [(ngModel)]="state">
+                        <option [value]="1">Borrador</option>
+                        <option [value]="2">Publicado</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <label class="fw-bold fs-6 mb-2">Foto principal</label>
+                <div class="text-center mb-4">
+                    <img *ngIf="imagen_previsualiza" [src]="imagen_previsualiza" alt="preview"
+                        style="width:100%;max-height:250px;object-fit:cover;border-radius:8px;">
+                    <div *ngIf="!imagen_previsualiza" class="bg-light d-flex align-items-center justify-content-center"
+                        style="height:200px;border-radius:8px;">
+                        <i class="ki-duotone ki-picture fs-3x text-muted">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </div>
+                </div>
+                <input type="file" accept="image/*" class="form-control form-control-solid"
+                    (change)="procesarImagen($event)">
+            </div>
+        </div>
+
+        <div class="text-end pt-6">
+            <a routerLink="/products/list" class="btn btn-light me-3">Cancelar</a>
+            <button type="button" (click)="save()" class="btn btn-primary">
+                Guardar cambios
+                <span class="spinner-border spinner-border-sm align-middle ms-2" *ngIf="isLoading$ | async"></span>
+            </button>
+        </div>
+    </div>
+</div>

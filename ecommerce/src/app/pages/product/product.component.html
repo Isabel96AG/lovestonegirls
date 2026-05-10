@@ -1,0 +1,143 @@
+
+<main>
+
+   <!-- breadcrumb area start -->
+   <section class="tp-breadcrumb-area pt-50 pb-50" style="background-color: #f6f6f6;">
+      <div class="container">
+         <div class="row">
+            <div class="col-12">
+               <div class="tp-breadcrumb-list d-flex align-items-center gap-2">
+                  <span><a [routerLink]="['/']">Home</a></span>
+                  <span>&rsaquo;</span>
+                  <span><a [routerLink]="['/shop']">Tienda</a></span>
+                  <span *ngIf="producto">&rsaquo;</span>
+                  <span *ngIf="producto" class="tp-breadcrumb-page">{{ producto.title }}</span>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <!-- breadcrumb area end -->
+
+   <!-- cargando -->
+   <section *ngIf="cargando" class="pt-80 pb-80 text-center">
+      <div class="container">
+         <p class="text-muted">Cargando producto...</p>
+      </div>
+   </section>
+
+   <!-- producto no encontrado -->
+   <section *ngIf="!cargando && !producto" class="pt-80 pb-80 text-center">
+      <div class="container">
+         <h4>Producto no encontrado</h4>
+         <a [routerLink]="['/shop']" class="tp-btn mt-3">Volver a la tienda</a>
+      </div>
+   </section>
+
+   <!-- detalle del producto -->
+   <section *ngIf="!cargando && producto" class="tp-product-details-area pt-60 pb-80">
+      <div class="container">
+         <div class="row">
+
+            <!-- columna izquierda: imágenes -->
+            <div class="col-xl-7 col-lg-7">
+               <div class="tp-product-details-thumb-wrapper d-sm-flex">
+
+                  <!-- miniaturas -->
+                  <div class="tp-product-details-thumb-list d-flex flex-sm-column gap-2 me-3" *ngIf="producto.images && producto.images.length > 0">
+                     <div
+                        class="tp-product-details-thumb-item"
+                        *ngFor="let img of producto.images"
+                        (click)="cambiarImagen(img)"
+                        style="cursor:pointer; border: 2px solid transparent;"
+                        [style.border-color]="imagenPrincipal === img ? '#821f40' : 'transparent'"
+                     >
+                        <img [src]="img" [alt]="producto.title" style="width:70px; height:70px; object-fit:cover; border-radius:4px;">
+                     </div>
+                  </div>
+
+                  <!-- imagen principal -->
+                  <div class="tp-product-details-thumb flex-grow-1">
+                     <img
+                        [src]="imagenPrincipal"
+                        [alt]="producto.title"
+                        style="width:100%; max-height:550px; object-fit:cover; border-radius:8px;"
+                     >
+                  </div>
+
+               </div>
+            </div>
+
+            <!-- columna derecha: info -->
+            <div class="col-xl-5 col-lg-5">
+               <div class="tp-product-details-wrapper">
+
+                  <!-- categoría -->
+                  <div class="tp-product-details-category mb-10" *ngIf="producto.categorie_first">
+                     <span>{{ producto.categorie_first }}</span>
+                     <span *ngIf="producto.categorie_second"> &rsaquo; {{ producto.categorie_second }}</span>
+                     <span *ngIf="producto.categorie_third"> &rsaquo; {{ producto.categorie_third }}</span>
+                  </div>
+
+                  <!-- título -->
+                  <h3 class="tp-product-details-title mb-15">{{ producto.title }}</h3>
+
+                  <!-- precio -->
+                  <div class="tp-product-details-price-wrapper mb-25">
+                     <span class="tp-product-details-price new-price" style="font-size: 28px; font-weight: 700; color: #821f40;">
+                        {{ producto.price }}€
+                     </span>
+                  </div>
+
+                  <!-- variaciones (talla, color...) -->
+                  <div *ngFor="let grupo of variacionesAgrupadas" class="mb-20">
+                     <div class="tp-product-details-variation-title mb-10">
+                        <strong>{{ grupo.atributo }}:</strong>
+                     </div>
+                     <div class="d-flex flex-wrap gap-2">
+                        <span
+                           *ngFor="let opcion of grupo.opciones"
+                           class="tp-product-details-variation-tag"
+                           style="border: 1px solid #ccc; padding: 5px 14px; border-radius: 4px; font-size: 14px;"
+                        >
+                           {{ opcion }}
+                        </span>
+                     </div>
+                  </div>
+
+                  <hr class="my-25">
+
+                  <!-- descripción -->
+                  <div class="tp-product-details-desc" *ngIf="producto.description">
+                     <h5 class="mb-10">Descripción</h5>
+                     <p style="color: #666; line-height: 1.7;">{{ producto.description }}</p>
+                  </div>
+
+                  <!-- botón añadir al carrito -->
+                  <div class="mt-30 d-flex gap-3">
+                     <button
+                        class="tp-btn w-100"
+                        (click)="addToCart()"
+                        [disabled]="agregando"
+                        style="padding: 14px 30px; font-size: 15px;"
+                     >
+                        {{ agregando ? 'Añadiendo...' : 'Añadir al carrito' }}
+                     </button>
+                  </div>
+
+                  <!-- volver a la tienda -->
+                  <div class="mt-15">
+                     <a [routerLink]="['/shop']" class="tp-btn tp-btn-border">
+                        &larr; Volver a la tienda
+                     </a>
+                  </div>
+
+               </div>
+            </div>
+
+         </div>
+      </div>
+   </section>
+   <!-- detalle del producto end -->
+
+</main>

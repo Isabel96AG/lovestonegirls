@@ -1,0 +1,81 @@
+<div class="card">
+    <div class="card-header border-0 pt-6">
+        <div class="card-title">
+            <div class="d-flex align-items-center position-relative my-1">
+                <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5">
+                    <span class="path1"></span>
+                    <span class="path2"></span>
+                </i>
+                <input type="text" [(ngModel)]="search" (ngModelChange)="searchTo()"
+                    class="form-control form-control-solid w-250px ps-13"
+                    placeholder="Buscar producto">
+            </div>
+        </div>
+        <div class="card-toolbar">
+            <a routerLink="/products/create" class="btn btn-primary">
+                <i class="ki-duotone ki-plus fs-2 me-1">
+                    <span class="path1"></span>
+                    <span class="path2"></span>
+                </i>
+                Añadir Producto
+            </a>
+        </div>
+    </div>
+
+    <div class="card-body py-4">
+        <table class="table align-middle table-row-dashed fs-6 gy-5">
+            <thead>
+                <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                    <th class="min-w-200px">PRODUCTO</th>
+                    <th class="min-w-100px">PRECIO</th>
+                    <th class="min-w-100px">ESTADO</th>
+                    <th class="text-end min-w-100px">ACCIONES</th>
+                </tr>
+            </thead>
+            <tbody class="text-gray-600 fw-semibold">
+                <tr *ngFor="let product of products">
+                    <td class="d-flex align-items-center">
+                        <div class="symbol symbol-45px me-5">
+                            <img *ngIf="product.image" [src]="product.image" alt="{{ product.title }}"
+                                style="width:45px;height:45px;object-fit:cover;border-radius:6px;">
+                            <div *ngIf="!product.image" class="symbol-label bg-light-primary">
+                                <i class="ki-duotone ki-clothes fs-2x text-primary">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <span class="text-gray-800 fw-bold text-hover-primary mb-1">{{ product.title }}</span>
+                        </div>
+                    </td>
+                    <td>{{ product.price }} €</td>
+                    <td>
+                        <span class="badge badge-light-success fs-7 fw-bold" *ngIf="product.state === 2">Publicado</span>
+                        <span class="badge badge-light-warning fs-7 fw-bold" *ngIf="product.state === 1">Borrador</span>
+                    </td>
+                    <td class="text-end">
+                        <a [routerLink]="'/products/list/edit/' + product.id"
+                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                            <i class="ki-duotone ki-pencil fs-2"><span class="path1"></span><span class="path2"></span></i>
+                        </a>
+                        <a href="#" onclick="return false;" (click)="deleteProduct(product)"
+                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                            <i class="ki-duotone ki-trash fs-2"><span class="path1"></span><span class="path2"></span></i>
+                        </a>
+                    </td>
+                </tr>
+                <tr *ngIf="products.length === 0">
+                    <td colspan="4" class="text-center py-10 text-muted">No hay productos registrados</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="mt-4" *ngIf="totalPages > 0">
+            <ngb-pagination [collectionSize]="totalPages" [(page)]="currentPage" [pageSize]="15"
+                [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"
+                class="d-flex justify-content-center">
+            </ngb-pagination>
+        </div>
+    </div>
+</div>

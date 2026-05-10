@@ -1,84 +1,165 @@
-<!--begin::Row-->
-<div class="row g-5 g-xl-10 mb-5 mb-xl-10">
-  <!--begin::Col-->
-  <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10">
-    <app-cards-widget20 cssClass="h-md-50 mb-5 mb-xl-10" description="Active Projects" color="#F1416C"
-      img="./assets/media/patterns/vector-1.png"></app-cards-widget20>
+<div class="row g-5 g-xl-10 mb-5 mb-xl-10" *ngIf="!cargando">
 
-    <app-cards-widget7 cssClass="h-md-50 mb-5 mb-xl-10" [icon]="false" [stats]="357" description="Professionals"
-      labelColor="dark" textColor="gray-300"></app-cards-widget7>
+  <!-- KPI: ventas hoy -->
+  <div class="col-xl-3 col-md-6">
+    <div class="card card-flush h-xl-100">
+      <div class="card-header pt-5">
+        <div class="card-title d-flex flex-column">
+          <span class="fs-2hx fw-bold text-dark me-2">{{ kpis.hoy }}€</span>
+          <span class="text-gray-400 pt-1 fw-semibold fs-6">Ventas hoy</span>
+        </div>
+      </div>
+      <div class="card-body pt-2 pb-4 d-flex align-items-center">
+        <span class="badge badge-light-success fs-base">
+          <i class="bi bi-calendar-day"></i> Hoy
+        </span>
+      </div>
+    </div>
   </div>
-  <!--end::Col-->
 
-  <!--begin::Col-->
-  <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10">
-    <app-cards-widget17 cssClass="h-md-50 mb-5 mb-xl-10"></app-cards-widget17>
-    <app-lists-widget26 class="h-lg-50"></app-lists-widget26>
+  <!-- KPI: ventas este mes -->
+  <div class="col-xl-3 col-md-6">
+    <div class="card card-flush h-xl-100">
+      <div class="card-header pt-5">
+        <div class="card-title d-flex flex-column">
+          <span class="fs-2hx fw-bold text-dark me-2">{{ kpis.este_mes }}€</span>
+          <span class="text-gray-400 pt-1 fw-semibold fs-6">Ventas este mes</span>
+        </div>
+      </div>
+      <div class="card-body pt-2 pb-4 d-flex align-items-center">
+        <span class="badge badge-light-primary fs-base">
+          <i class="bi bi-calendar-month"></i> Este mes
+        </span>
+      </div>
+    </div>
   </div>
-  <!--end::Col-->
 
+  <!-- KPI: ventas este año -->
+  <div class="col-xl-3 col-md-6">
+    <div class="card card-flush h-xl-100">
+      <div class="card-header pt-5">
+        <div class="card-title d-flex flex-column">
+          <span class="fs-2hx fw-bold text-dark me-2">{{ kpis.este_anio }}€</span>
+          <span class="text-gray-400 pt-1 fw-semibold fs-6">Ventas este año</span>
+        </div>
+      </div>
+      <div class="card-body pt-2 pb-4 d-flex align-items-center">
+        <span class="badge badge-light-warning fs-base">
+          <i class="bi bi-calendar"></i> Este año
+        </span>
+      </div>
+    </div>
+  </div>
 
-  <!--begin::Col-->
-  <app-engage-widget10 class="col-xxl-6" cssClass="h-md-100"></app-engage-widget10>
-  <!--end::Col-->
-</div>
-<!--end::Row-->
+  <!-- KPI: clientes -->
+  <div class="col-xl-3 col-md-6">
+    <div class="card card-flush h-xl-100">
+      <div class="card-header pt-5">
+        <div class="card-title d-flex flex-column">
+          <span class="fs-2hx fw-bold text-dark me-2">{{ kpis.total_clientes }}</span>
+          <span class="text-gray-400 pt-1 fw-semibold fs-6">Clientes con pedidos</span>
+        </div>
+      </div>
+      <div class="card-body pt-2 pb-4 d-flex align-items-center">
+        <span class="badge badge-light-info fs-base">
+          <i class="bi bi-people"></i> Total
+        </span>
+      </div>
+    </div>
+  </div>
 
-<!--begin::Row-->
-<div class="row gx-5 gx-xl-10">
-  <!--begin::Col-->
-  <div class="col-xxl-6 mb-5 mb-xl-10">
-    <app-new-charts-widget8 cssClass="h-xl-100" chartHeight="275px" [chartHeightNumber]="275"></app-new-charts-widget8>
-  </div>
-  <!--end::Col-->
-
-  <!--begin::Col-->
-  <div class="col-xxl-6 mb-5 mb-xl-10">
-    <app-cards-widget18 cssClass="h-xl-100" image="./assets/media/stock/600x600/img-65.jpg"></app-cards-widget18>
-  </div>
-  <!--end::Col-->
-</div>
-<!--end::Row-->
-
-<!-- begin::Row -->
-<div class="row gy-5 gx-xl-8">
-  <div class="col-xxl-4">
-    <app-lists-widget3 class="card card-xxl-stretch mb-xl-3"></app-lists-widget3>
-  </div>
-  <div class="col-xl-8">
-    <app-tables-widget10 class="card card-xxl-stretch mb-5 mb-xl-8"></app-tables-widget10>
-  </div>
-</div>
-<!-- end::Row -->
-
-<!-- begin::Row -->
-<div class="row gy-5 g-xl-8">
-  <div class="col-xl-4">
-    <app-lists-widget2 class="card card-xl-stretch mb-xl-8"></app-lists-widget2>
-  </div>
-  <div class="col-xl-4">
-    <app-lists-widget6 class="card card-xl-stretch mb-xl-8"></app-lists-widget6>
-  </div>
-  <div class="col-xl-4">
-    <app-lists-widget4 class="card card-xl-stretch mb-5 mb-xl-8"></app-lists-widget4>
-  </div>
-</div>
-<!-- end::Row -->
-
-<div class="row g-5 gx-xxl-8">
-  <div class="col-xxl-4">
-    <app-mixed-widget8 class="card card-xxl-stretch mb-xl-3" chartColor="success" chartHeight="150px">
-    </app-mixed-widget8>
-  </div>
-  <div class="col-xxl-8">
-    <app-tables-widget5 class="card card-xxl-stretch mb-5 mb-xxl-8"></app-tables-widget5>
-  </div>
 </div>
 
-<!-- begin:: Modal example -->
-<!-- <app-modal #modal [modalConfig]="modalConfig">
-  Modal body html
-</app-modal>
-<button class="btn btn-primary" (click)="openModal()">Open modal</button> -->
-<!-- Note: Don't forget import ModalsModule (from _metronic/partials) into your module -->
-<!-- end:: Modal example -->
+<!-- gráfico de ventas por mes -->
+<div class="row g-5 g-xl-10 mb-5 mb-xl-10" *ngIf="!cargando">
+  <div class="col-12">
+    <div class="card card-flush">
+      <div class="card-header pt-5">
+        <h3 class="card-title fw-bold text-dark">Ventas de los últimos 12 meses</h3>
+      </div>
+      <div class="card-body pt-3">
+        <div *ngIf="ventasPorMes.length === 0" class="text-center text-muted py-5">
+          Aún no hay ventas registradas
+        </div>
+        <canvas id="graficoVentas" height="100" *ngIf="ventasPorMes.length > 0"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-5 g-xl-10 mb-5" *ngIf="!cargando">
+
+  <!-- tabla: productos más vendidos -->
+  <div class="col-xl-5">
+    <div class="card card-flush h-100">
+      <div class="card-header pt-5">
+        <h3 class="card-title fw-bold text-dark">Productos más vendidos</h3>
+      </div>
+      <div class="card-body pt-3">
+        <div *ngIf="productosMasVendidos.length === 0" class="text-center text-muted py-5">
+          Aún no hay ventas registradas
+        </div>
+        <div *ngFor="let p of productosMasVendidos; let i = index"
+          class="d-flex align-items-center mb-5">
+          <span class="fw-bold text-muted me-3" style="min-width:20px;">{{ i + 1 }}.</span>
+          <div class="symbol symbol-40px me-3">
+            <img [src]="p.imagen || 'assets/media/avatars/blank.png'" [alt]="p.producto"
+              style="width:40px; height:40px; object-fit:cover; border-radius:6px;">
+          </div>
+          <div class="flex-grow-1">
+            <span class="fw-bold text-dark d-block">{{ p.producto }}</span>
+            <span class="text-muted fs-7">{{ p.precio }}€</span>
+          </div>
+          <span class="badge badge-light-success">{{ p.vendidos }} uds</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- tabla: clientes que han comprado -->
+  <div class="col-xl-7">
+    <div class="card card-flush h-100">
+      <div class="card-header pt-5">
+        <h3 class="card-title fw-bold text-dark">Clientes</h3>
+      </div>
+      <div class="card-body pt-3">
+        <div class="table-responsive">
+          <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-3">
+            <thead>
+              <tr class="fw-bold text-muted">
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Pedidos</th>
+                <th>Total gastado</th>
+                <th>Último pedido</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let c of clientes">
+                <td class="fw-bold">{{ c.nombre }}</td>
+                <td class="text-muted">{{ c.email }}</td>
+                <td class="text-muted">{{ c.telefono }}</td>
+                <td>
+                  <span class="badge badge-light-primary">{{ c.num_pedidos }}</span>
+                </td>
+                <td class="fw-bold text-dark">{{ c.total_gastado }}€</td>
+                <td class="text-muted">{{ c.ultimo_pedido }}</td>
+              </tr>
+              <tr *ngIf="clientes.length === 0">
+                <td colspan="6" class="text-center text-muted py-5">Aún no hay clientes con pedidos</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- spinner mientras carga -->
+<div *ngIf="cargando" class="text-center py-10">
+  <span class="spinner-border text-primary"></span>
+  <p class="text-muted mt-3">Cargando estadísticas...</p>
+</div>

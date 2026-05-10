@@ -1,1 +1,27 @@
-<p>delete-categorie works!</p>
+<div class="modal-content p-0 rounded shadow-sm border-0">
+  <div class="modal-header border-0 pb-0">
+    <h2 class="fw-bold fs-4 text-dark">Eliminar Categoría</h2>
+    <button type="button" class="btn btn-icon btn-sm btn-light" (click)="modal.dismiss()">
+      <i class="ki-duotone ki-cross fs-2">
+        <span class="path1"></span>
+        <span class="path2"></span>
+      </i>
+    </button>
+  </div>
+
+  <div class="modal-body px-5 py-7">
+    <p class="text-center text-muted fs-6">
+      ¿Estás seguro de que deseas eliminar <strong>{{ categorie?.name }}</strong>?
+      Esta acción no se puede deshacer.
+    </p>
+    <div class="d-flex justify-content-center gap-3 mt-5">
+      <button type="button" class="btn btn-light fw-semibold" (click)="modal.dismiss()">
+        Cancelar
+      </button>
+      <button type="button" (click)="delete()" class="btn btn-danger fw-semibold">
+        Eliminar
+        <span class="spinner-border spinner-border-sm ms-2" *ngIf="isLoading | async"></span>
+      </button>
+    </div>
+  </div>
+</div>

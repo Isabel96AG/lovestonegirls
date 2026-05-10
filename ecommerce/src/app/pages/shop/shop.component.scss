@@ -1,0 +1,38 @@
+.tp-btn-category {
+  padding: 8px 20px;
+  border: 1px solid #ddd;
+  background: #fff;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.tp-btn-category:hover,
+.tp-btn-category.active {
+  background: #821f40;
+  color: #fff;
+  border-color: #821f40;
+}
+
+.tp-pagination-btn {
+  width: 38px;
+  height: 38px;
+  border: 1px solid #ddd;
+  background: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.tp-pagination-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.tp-pagination-btn:hover:not(:disabled) {
+  background: var(--tp-theme-primary, #821f40);
+  color: #fff;
+  border-color: var(--tp-theme-primary, #821f40);
+}

@@ -1,0 +1,37 @@
+.tp-checkout-bill-form-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  display: block;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+
+  &:focus {
+    border-color: #821f40;
+  }
+
+  &.is-invalid {
+    border-color: #dc3545;
+  }
+}
+
+.invalid-feedback {
+  font-size: 12px;
+  color: #dc3545;
+  margin-top: 4px;
+}
+
+// en móvil el resumen va debajo del formulario
+@media (max-width: 767px) {
+  .tp-checkout-place {
+    margin-top: 30px;
+    position: static !important;
+  }
+}

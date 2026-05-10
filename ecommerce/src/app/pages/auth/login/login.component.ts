@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../service/auth.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -7,79 +8,86 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.scss'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
-  email:string = '';
-  password:string = '';
-  code_user:string = '';
+  email: string = '';
+  password: string = '';
+  code_user: string = '';
+
+  // objeto que guarda los errores de cada campo del formulario
+  errores: any = {};
+
   constructor(
     private toastr: ToastrService,
     private authService: AuthService,
     public router: Router,
     public activedRoute: ActivatedRoute,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    // this.showSuccess();
-    if(this.authService.token && this.authService.user){
-      this.router.navigateByUrl("/");
+    // si el usuario ya tiene sesión activa lo mandamos al inicio
+    if (this.authService.token && this.authService.user) {
+      this.router.navigateByUrl('/');
       return;
     }
-    this.activedRoute.queryParams.subscribe((resp:any) => {
+
+    this.activedRoute.queryParams.subscribe((resp: any) => {
       this.code_user = resp.code;
-    })
-    if(this.code_user){
-      let data = {
-        code_user: this.code_user,
-      }
-      this.authService.verifiedAuth(data).subscribe((resp:any) =>{
-        console.log(resp);
-        if(resp.message == 403){
-           this.toastr.error("Validacion", "El código no pertenece a ningun usuario");
-           }
-        if(resp.message == 200){
-           this.toastr.success("Exito", "El correo ha sido verificado, ingresar a la tienda");
-           setTimeout(() => {
-            this.router.navigateByUrl("/login");
-           },500);
-           }
-      })
+    });
+
+    if (this.code_user) {
+      let data = { code_user: this.code_user };
+      this.authService.verifiedAuth(data).subscribe((resp: any) => {
+        if (resp.message == 403) {
+          this.toastr.error('Validacion', 'El código no pertenece a ningún usuario');
+        }
+        if (resp.message == 200) {
+          this.toastr.success('Éxito', 'Correo verificado, ya puedes iniciar sesión');
+          setTimeout(() => { this.router.navigateByUrl('/login'); }, 500);
+        }
+      });
     }
   }
 
-  login(){
-    // 1. Campos vacíos
-    if(!this.email || !this.password){
-      this.toastr.error("Validacion","Necesitas ingresar todos los campos");
-      return;
+  // limpiamos los errores antes de cada validación
+  validar(): boolean {
+    this.errores = {};
+
+    // comprobamos que el email no esté vacío
+    if (!this.email.trim()) {
+      this.errores.email = 'El email es obligatorio';
+    } else {
+      // validación del formato del email con regex
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(this.email)) {
+        this.errores.email = 'El formato del email no es válido';
+      }
     }
 
-    // 2. Email con formato válido
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if(!emailRegex.test(this.email)){
-      this.toastr.error("Validacion","El email no tiene un formato válido");
-      return;
+    // comprobamos que la contraseña no esté vacía
+    if (!this.password.trim()) {
+      this.errores.password = 'La contraseña es obligatoria';
     }
 
-    this.authService.login(this.email,this.password).subscribe((resp:any) => {
-      console.log(resp);
-      if(resp === true){
-        this.toastr.success("Bienvenido", "Login exitoso");
-        this.router.navigateByUrl("/");
+    // si el objeto errores está vacío, el formulario es válido
+    return Object.keys(this.errores).length === 0;
+  }
+
+  login() {
+    // primero validamos antes de hacer la petición al servidor
+    if (!this.validar()) return;
+
+    this.authService.login(this.email, this.password).subscribe((resp: any) => {
+      if (resp === true) {
+        this.toastr.success('Bienvenido', 'Login exitoso');
+        this.router.navigateByUrl('/');
       } else {
-        this.toastr.error("Credenciales incorrectas", "Error de login");
+        this.toastr.error('Credenciales incorrectas', 'Error de login');
       }
-    })
-  }
-
-  showSuccess() {
-    this.toastr.success('Hello world!', 'Toastr fun!');
+    });
   }
 }

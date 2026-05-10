@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use App\Models\Sale\Sale;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -53,6 +54,12 @@ class User extends Authenticatable implements JWTSubject
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    // un usuario puede tener muchos pedidos
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
     }
 
     public function getJWTIdentifier()

@@ -1,0 +1,154 @@
+
+<main>
+
+   <!-- breadcrumb area start -->
+   <section class="tp-breadcrumb-area pt-50 pb-50" style="background-color: #f6f6f6;">
+      <div class="container">
+         <div class="row align-items-center">
+            <div class="col-sm-6">
+               <div class="tp-breadcrumb-title">
+                  <h3>Tienda</h3>
+               </div>
+            </div>
+            <div class="col-sm-6">
+               <div class="tp-breadcrumb-list d-flex justify-content-sm-end">
+                  <span><a [routerLink]="['/']">Home</a></span>
+                  <span class="tp-breadcrumb-dvdr"> &rsaquo; </span>
+                  <span class="tp-breadcrumb-page">Tienda</span>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <!-- breadcrumb area end -->
+
+   <!-- shop area start -->
+   <section class="tp-shop-area pt-60 pb-80">
+      <div class="container">
+
+         <!-- barra de búsqueda -->
+         <div class="row mb-30">
+            <div class="col-xl-6 col-lg-8 mx-auto">
+               <div class="d-flex gap-2">
+                  <input
+                     type="text"
+                     class="form-control"
+                     placeholder="Buscar prendas..."
+                     [(ngModel)]="busqueda"
+                     (keyup.enter)="buscar()"
+                  >
+                  <button class="tp-btn" (click)="buscar()">Buscar</button>
+               </div>
+            </div>
+         </div>
+
+         <!-- filtros por categoría -->
+         <div class="row mb-30" *ngIf="categorias.length > 0">
+            <div class="col-12 d-flex flex-wrap gap-2">
+               <button
+                  class="tp-btn-category"
+                  [class.active]="categoriaSeleccionada === ''"
+                  (click)="filtrarPorCategoria('')"
+               >
+                  Todos
+               </button>
+               <button
+                  class="tp-btn-category"
+                  *ngFor="let cat of categorias"
+                  [class.active]="categoriaSeleccionada === cat.id"
+                  (click)="filtrarPorCategoria(cat.id)"
+               >
+                  {{ cat.name }}
+               </button>
+            </div>
+         </div>
+
+         <!-- info de resultados y ordenación -->
+         <div class="row mb-20 align-items-center">
+            <div class="col-sm-6">
+               <p class="text-muted mb-0">{{ total }} producto{{ total !== 1 ? 's' : '' }} encontrado{{ total !== 1 ? 's' : '' }}</p>
+            </div>
+            <div class="col-sm-6 d-flex justify-content-sm-end mt-2 mt-sm-0">
+               <!-- selector para ordenar los productos -->
+               <select class="form-select" style="width: auto;" [(ngModel)]="ordenar" (change)="aplicarOrden()">
+                  <option value="">Ordenar por</option>
+                  <option value="precio-asc">Precio: menor a mayor</option>
+                  <option value="precio-desc">Precio: mayor a menor</option>
+               </select>
+            </div>
+         </div>
+
+         <!-- grid de productos -->
+         <div class="row" *ngIf="productos.length > 0; else sinProductos">
+            <div class="col-xl-3 col-lg-4 col-sm-6" *ngFor="let producto of productos">
+               <div class="tp-product-item p-relative transition-3 mb-40">
+                  <div class="tp-product-thumb p-relative fix m-img">
+                     <a [routerLink]="['/product', producto.slug]">
+                        <img
+                           [src]="producto.image || 'assets/img/product/placeholder.jpg'"
+                           [alt]="producto.title"
+                           style="width:100%; height:300px; object-fit:cover;"
+                        >
+                     </a>
+                     <div class="tp-product-action">
+                        <div class="tp-product-action-item d-flex flex-column">
+                           <a [routerLink]="['/product', producto.slug]" class="tp-product-action-btn tp-product-quick-view-btn">
+                              <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M9.99938 5.64111C8.66938 5.64111 7.58838 6.72311 7.58838 8.05311C7.58838 9.38211 8.66938 10.4631 9.99938 10.4631C11.3294 10.4631 12.4114 9.38211 12.4114 8.05311C12.4114 6.72311 11.3294 5.64111 9.99938 5.64111ZM9.99938 11.9631C7.84238 11.9631 6.08838 10.2091 6.08838 8.05311C6.08838 5.89611 7.84238 4.14111 9.99938 4.14111C12.1564 4.14111 13.9114 5.89611 13.9114 8.05311C13.9114 10.2091 12.1564 11.9631 9.99938 11.9631Z" fill="currentColor"/>
+                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M1.56975 8.05226C3.42975 12.1613 6.56275 14.6043 9.99975 14.6053C13.4368 14.6043 16.5697 12.1613 18.4298 8.05226C16.5697 3.94426 13.4368 1.50126 9.99975 1.50026C6.56375 1.50126 3.42975 3.94426 1.56975 8.05226ZM10.0017 16.1053H9.99775C5.86075 16.1023 2.14675 13.2033 0.06075 8.34826C-0.02025 8.15926 -0.02025 7.94526 0.06075 7.75626C2.14675 2.90226 5.86175 0.00326172 9.99675 0.000261719C9.99975 0.000261719 10.0028 0.000261719 14.1388 0.00326172C17.8527 2.90226 19.9387 7.75626C20.0208 7.94526 20.0208 8.15926 19.9387 8.34826C17.8537 13.2033 14.1388 16.1023 10.0028 16.1053H10.0017Z" fill="currentColor"/>
+                              </svg>
+                              <span class="tp-product-tooltip">Ver producto</span>
+                           </a>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="tp-product-content">
+                     <h3 class="tp-product-title">
+                        <a [routerLink]="['/product', producto.slug]">{{ producto.title }}</a>
+                     </h3>
+                     <div class="tp-product-price-wrapper">
+                        <span class="tp-product-price new-price">{{ producto.price }}€</span>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <!-- mensaje si no hay productos -->
+         <ng-template #sinProductos>
+            <div class="row">
+               <div class="col-12 text-center py-5">
+                  <p class="text-muted fs-5">No se encontraron productos con ese criterio de búsqueda.</p>
+                  <button class="tp-btn mt-3" (click)="busqueda = ''; cargarProductos()">Ver todos</button>
+               </div>
+            </div>
+         </ng-template>
+
+         <!-- paginación -->
+         <div class="row mt-20" *ngIf="totalPaginas > 1">
+            <div class="col-12">
+               <div class="tp-pagination d-flex justify-content-center align-items-center gap-2">
+                  <button
+                     class="tp-pagination-prev tp-pagination-btn"
+                     (click)="cambiarPagina(paginaActual - 1)"
+                     [disabled]="paginaActual === 1"
+                  >
+                     &lsaquo;
+                  </button>
+                  <span>Página {{ paginaActual }} de {{ totalPaginas }}</span>
+                  <button
+                     class="tp-pagination-next tp-pagination-btn"
+                     (click)="cambiarPagina(paginaActual + 1)"
+                     [disabled]="paginaActual === totalPaginas"
+                  >
+                     &rsaquo;
+                  </button>
+               </div>
+            </div>
+         </div>
+
+      </div>
+   </section>
+   <!-- shop area end -->
+
+</main>

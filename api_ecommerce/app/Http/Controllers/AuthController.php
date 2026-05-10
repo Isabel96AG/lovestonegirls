@@ -50,9 +50,8 @@ class AuthController extends Controller
         $user->email = request()->email;
         $user->uniqd = uniqid();
         $user->password = bcrypt(request()->password);
+        $user->email_verified_at = now();
         $user->save();
-
-        Mail::to(request()->email)->send(new VerifiedMail($user));
 
         return response()->json($user, 201);
     }
@@ -82,11 +81,6 @@ class AuthController extends Controller
             "type_user" => 2
         ])) {
             return response()->json(['error' => 'Unauthorized'], 401);
-        }
-
-        if (! auth('api')->user()->email_verified_at) {
-            auth('api')->logout();
-            return response()->json(['error' => 'Debes verificar tu correo electrónico'], 403);
         }
 
         return $this->respondWithToken($token);

@@ -1,0 +1,22 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h2 class="fw-bolder">Editar Atributo</h2>
+        <div class="btn btn-icon btn-sm btn-active-icon-primary" (click)="modal.dismiss()">
+            <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+        </div>
+    </div>
+    <div class="modal-body mx-5 my-7">
+        <div class="fv-row mb-7">
+            <label class="required fw-bold fs-6 mb-2">Nombre</label>
+            <input type="text" class="form-control form-control-solid" placeholder="Ej: Talla, Color"
+                [(ngModel)]="name" />
+        </div>
+        <div class="text-center pt-6">
+            <button type="button" class="btn btn-light me-3" (click)="modal.dismiss()">Cancelar</button>
+            <button type="button" class="btn btn-primary" (click)="save()">
+                Guardar
+                <span class="spinner-border spinner-border-sm align-middle ms-2" *ngIf="isLoading$ | async"></span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -44,6 +44,8 @@ export class AuthService {
     if(resp && resp.access_token){
       localStorage.setItem("token",resp.access_token);
       localStorage.setItem("user",JSON.stringify(resp.user));
+      this.token = resp.access_token;
+      this.user = resp.user;
       return true;
     }
     return false;

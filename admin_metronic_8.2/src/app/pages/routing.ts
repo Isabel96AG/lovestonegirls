@@ -46,10 +46,22 @@ const Routing: Routes = [
     path: 'apps/permissions',
     loadChildren: () => import('./permission/permission.module').then((m) => m.PermissionModule),
   },
-  // NUESTROS MODULOS
+  // mis modulos
   {
     path: 'categories',
     loadChildren: () => import('../modules/categories/categories.module').then((m) => m.CategoriesModule),
+  },
+  {
+    path: 'attributes',
+    loadChildren: () => import('../modules/attributes/attributes.module').then((m) => m.AttributesModule),
+  },
+  {
+    path: 'products',
+    loadChildren: () => import('../modules/products/products.module').then((m) => m.ProductsModule),
+  },
+  {
+    path: 'sliders',
+    loadChildren: () => import('../modules/sliders/sliders.module').then((m) => m.SlidersModule),
   },
   {
     path: '',

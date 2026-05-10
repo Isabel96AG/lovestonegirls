@@ -1,0 +1,19 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h2 class="fw-bolder">Eliminar Slider</h2>
+        <div class="btn btn-icon btn-sm btn-active-icon-primary" (click)="modal.dismiss()">
+            <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+        </div>
+    </div>
+    <div class="modal-body text-center py-10">
+        <p class="fs-5">¿Estás segura de que quieres eliminar <strong>{{ slider?.title }}</strong>?</p>
+        <p class="text-muted">Esta acción no se puede deshacer.</p>
+    </div>
+    <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-light me-3" (click)="modal.dismiss()">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="delete()">
+            Eliminar
+            <span class="spinner-border spinner-border-sm align-middle ms-2" *ngIf="isLoading$ | async"></span>
+        </button>
+    </div>
+</div>

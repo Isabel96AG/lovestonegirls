@@ -1,67 +1,135 @@
 <div class="card">
-    <!--begin::Card body-->
     <div class="card-body border-top p-9">
-     <div class="row mb-6">
-                    <!--begin::Label-->
-                      <!--begin::Col-->
-                    <div class="col-lg-4 fv-row fv-plugins-icon-container">
-                         <label class="fw-semibold fs-6 py-2">Nombre</label>
-                    <!--end::Label-->
-                        <input type="text" name="name" class="form-control form-control-lg form-control-solid" placeholder=" Por ejemplo: Pantalones" >
-                    </div>
-                    <!--end::Col-->
-                      <div class="col-lg-4 fv-row fv-plugins-icon-container">
-                         <label class="fw-semibold fs-6 py-2">Icon</label>
-                    <!--end::Label-->
-                        <input type="text" name="icon" class="form-control form-control-lg form-control-solid" placeholder=" Por ejemplo: Pantalones" >
-                    </div>
-     </div>
-       <div class="row mb-6 align-items-center">
+
+        <!-- Selector de tipo -->
+        <div class="row g-9 mb-6">
+            <div class="col-4">
+                <label class="btn btn-outline btn-outline-dashed btn-outline-default d-flex text-start p-6"
+                    [ngClass]="{'active': type_categorie === 1}">
+                    <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
+                        <input class="form-check-input" type="radio" (click)="changeTypeCategorie(1)" name="usage" value="1" checked="checked">
+                    </span>
+                    <span class="ms-5">
+                        <span class="fs-6 fw-bolder mb-1 d-block">Departamento</span>
+                        <small>Primer Nivel</small>
+                    </span>
+                </label>
+            </div>
+            <div class="col-4">
+                <label class="btn btn-outline btn-outline-dashed btn-outline-default d-flex text-start p-6"
+                    [ngClass]="{'active': type_categorie === 2}">
+                    <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
+                        <input class="form-check-input" type="radio" (click)="changeTypeCategorie(2)" name="usage" value="2">
+                    </span>
+                    <span class="ms-5">
+                        <span class="fs-6 fw-bolder mb-1 d-block">Categoría</span>
+                        <small>Segundo Nivel</small>
+                    </span>
+                </label>
+            </div>
+            <div class="col-4">
+                <label class="btn btn-outline btn-outline-dashed btn-outline-default d-flex text-start p-6"
+                    [ngClass]="{'active': type_categorie === 3}">
+                    <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
+                        <input class="form-check-input" type="radio" (click)="changeTypeCategorie(3)" name="usage" value="3">
+                    </span>
+                    <span class="ms-5">
+                        <span class="fs-6 fw-bolder mb-1 d-block">SubCategoría</span>
+                        <small>Tercer Nivel</small>
+                    </span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Nombre, Icono, Posición -->
+        <div class="row mb-6">
+            <div class="col-lg-4 fv-row">
+                <label class="fw-semibold fs-6 py-2">Nombre: (*)</label>
+                <input type="text" name="name" [(ngModel)]="name"
+                    class="form-control form-control-lg form-control-solid"
+                    placeholder="Por ejemplo: Pantalones">
+            </div>
+            <div class="col-lg-4 fv-row">
+                <label class="fw-semibold fs-6 py-2">Icon:</label>
+                <input type="text" name="icon" [(ngModel)]="icon"
+                    class="form-control form-control-lg form-control-solid"
+                    placeholder="Por ejemplo: fa-tshirt">
+            </div>
+            <div class="col-lg-4 fv-row">
+                <label class="fw-semibold fs-6 py-2">Posición: (*)</label>
+                <input type="number" name="position" [(ngModel)]="position"
+                    class="form-control form-control-lg form-control-solid"
+                    placeholder="Por ejemplo: 1">
+            </div>
+        </div>
+
+        <!-- Imagen -->
+        <div class="row mb-6 align-items-center">
             <div class="col-lg-6 col-md-6 col-sm-12 my-2">
-                <label class="form-label fw-semibold fs-6 py-2">Sube tu imagen: *</label>
+                <label class="form-label fw-semibold fs-6 py-2">
+                    Sube tu imagen: ({{ type_categorie === 1 ? '*' : 'Opcional' }})
+                </label>
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="customFile" accept=".jpeg, .bmp, .jpg, .png, .gif, .webp" (change)="processFile($event)">
-                    <label class="custom-file-label" for="customFile">Choose file</label>
+                    <input type="file" class="custom-file-input" id="customFile"
+                        accept=".jpeg,.bmp,.jpg,.png,.gif,.webp"
+                        (change)="processFile($event)"
+                        #fileInput>
+                    <label class="custom-file-label" for="customFile">Elegir archivo</label>
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12 my-2 text-center">
                 <label class="form-label fw-semibold fs-6 py-2 d-block">Vista previa</label>
-                <div class="image-preview-wrapper d-inline-block p-3 bg-light rounded shadow-sm" style="border: 2px dashed #d9d9d9;">
-                    <img [src]="imagen_previsualiza || 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=300&h=300&fit=crop&q=80'"
-                         alt="Vista previa de la categoría"
-                         class="rounded"
-                         style="width: 200px; height: 200px; object-fit: cover;">
+                <div class="d-inline-block p-3 bg-light rounded shadow-sm" style="border: 2px dashed #d9d9d9;">
+                    <img [src]="imagen_previsualiza || default_icon" alt="Vista previa"
+                        class="rounded" style="width: 200px; height: 200px; object-fit: cover;">
                 </div>
             </div>
-               <div class="col-lg-4 fv-row fv-plugins-icon-container">
-                         <label class="fw-semibold fs-6 py-2">Posicion</label>
-                    <!--end::Label-->
-                        <input type="number" name="position" class="form-control form-control-lg form-control-solid" placeholder=" Por ejemplo: 2" >
-                    </div>
         </div>
 
-        <div class="row mb-6">
-            <div class="col-lg-6 col-md-6 col-sm-12 my-2">
-                <label class="fw-semibold fs-6 py-2">Departamento:</label>
-                <select
-                    class="form-control form-select-solid fw-bolder"
-                    name="departamento"
-                    placeholder="Selec. Departamento"
-                >
-                    <option value="">Todos</option>
-                </select>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-12 my-2">
-                <label class="fw-semibold fs-6 py-2">Categoria:</label>
-                <select
-                    class="form-control form-select-solid fw-bolder"
-                    name="categorie"
-                    placeholder="Selec. Categoria"
-                >
-                    <option value="">Todos</option>
+        <!-- NIVEL 2: solo Departamento -->
+        <div class="row mb-6" *ngIf="type_categorie === 2">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <label class="fw-semibold fs-6 py-2">Departamento (Primer Nivel): (*)</label>
+                <select class="form-control form-select-solid fw-bolder"
+                    name="departamento" [(ngModel)]="categorie_second_id">
+                    <option value="" disabled selected>Selecciona un departamento</option>
+                    <option *ngFor="let cat of categories_first" [value]="cat.id">{{ cat.name }}</option>
                 </select>
             </div>
         </div>
+
+        <!-- NIVEL 3: Departamento y luego Categoría filtrada -->
+        <div class="row mb-6" *ngIf="type_categorie === 3">
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
+                <label class="fw-semibold fs-6 py-2">Departamento (Primer Nivel): (*)</label>
+                <select class="form-control form-select-solid fw-bolder"
+                    name="departamento3" [(ngModel)]="categorie_third_id"
+                    (change)="changeDepartament()">
+                    <option value="" disabled selected>Selecciona un departamento</option>
+                    <option *ngFor="let cat of categories_first" [value]="cat.id">{{ cat.name }}</option>
+                </select>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <label class="fw-semibold fs-6 py-2">Categoría (Segundo Nivel): (*)</label>
+                <select class="form-control form-select-solid fw-bolder"
+                    name="categoria3" [(ngModel)]="categorie_second_id"
+                    [disabled]="!categorie_third_id">
+                    <option value="" disabled selected>
+                        {{ categorie_third_id ? 'Selecciona una categoría' : 'Primero selecciona un departamento' }}
+                    </option>
+                    <option *ngFor="let cat of categories_seconds_filtered" [value]="cat.id">{{ cat.name }}</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Botón guardar -->
+        <div class="row justify-content-center mt-4">
+            <div class="col-12 col-md-3 text-center">
+                <button type="button" (click)="save()" class="btn btn-primary">
+                    Guardar cambios
+                </button>
+            </div>
+        </div>
+
     </div>
-    <!--end::Card body-->
 </div>

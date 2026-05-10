@@ -1,0 +1,59 @@
+<div class="card">
+    <div class="card-header border-0 pt-6">
+        <h2 class="fw-bolder card-title">Sliders</h2>
+        <div class="card-toolbar">
+            <a routerLink="/sliders/create" class="btn btn-primary">
+                <i class="ki-duotone ki-plus fs-2 me-1">
+                    <span class="path1"></span>
+                    <span class="path2"></span>
+                </i>
+                Añadir Slider
+            </a>
+        </div>
+    </div>
+
+    <div class="card-body py-4">
+        <table class="table align-middle table-row-dashed fs-6 gy-5">
+            <thead>
+                <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                    <th class="min-w-200px">IMAGEN</th>
+                    <th class="min-w-150px">TÍTULO</th>
+                    <th class="min-w-100px">TIPO</th>
+                    <th class="min-w-100px">ESTADO</th>
+                    <th class="text-end min-w-100px">ACCIONES</th>
+                </tr>
+            </thead>
+            <tbody class="text-gray-600 fw-semibold">
+                <tr *ngFor="let slider of sliders">
+                    <td>
+                        <img *ngIf="slider.image" [src]="slider.image" alt="{{ slider.title }}"
+                            style="width:80px;height:45px;object-fit:cover;border-radius:6px;">
+                        <span *ngIf="!slider.image" class="text-muted">Sin imagen</span>
+                    </td>
+                    <td>{{ slider.title }}</td>
+                    <td>
+                        <span *ngIf="slider.type_slider === 1">Principal</span>
+                        <span *ngIf="slider.type_slider === 2">Secundario</span>
+                    </td>
+                    <td>
+                        <span class="badge badge-light-success fs-7 fw-bold" *ngIf="slider.state === 1">Activo</span>
+                        <span class="badge badge-light-danger fs-7 fw-bold" *ngIf="slider.state !== 1">Inactivo</span>
+                    </td>
+                    <td class="text-end">
+                        <a [routerLink]="'/sliders/list/edit/' + slider.id"
+                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                            <i class="ki-duotone ki-pencil fs-2"><span class="path1"></span><span class="path2"></span></i>
+                        </a>
+                        <a href="#" onclick="return false;" (click)="deleteSlider(slider)"
+                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                            <i class="ki-duotone ki-trash fs-2"><span class="path1"></span><span class="path2"></span></i>
+                        </a>
+                    </td>
+                </tr>
+                <tr *ngIf="sliders.length === 0">
+                    <td colspan="5" class="text-center py-10 text-muted">No hay sliders registrados</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,211 @@
+<main>
+
+  <!-- breadcrumb -->
+  <section class="tp-breadcrumb-area pt-50 pb-50" style="background-color: #f6f6f6;">
+    <div class="container">
+      <div class="tp-breadcrumb-list d-flex gap-2">
+        <span><a [routerLink]="['/']">Home</a></span>
+        <span>&rsaquo;</span>
+        <span><a [routerLink]="['/cart']">Carrito</a></span>
+        <span>&rsaquo;</span>
+        <span class="tp-breadcrumb-page">Finalizar compra</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="tp-checkout-area pt-60 pb-80">
+    <div class="container">
+
+      <div *ngIf="cargando" class="text-center py-5">
+        <p class="text-muted">Cargando...</p>
+      </div>
+
+      <div *ngIf="!cargando" class="row">
+
+        <!-- formulario de envío y pago -->
+        <div class="col-lg-7">
+          <div class="tp-checkout-bill-area">
+
+            <h3 class="tp-checkout-bill-title mb-30" style="font-weight:700; font-size:1.3rem;">
+              Datos de envío
+            </h3>
+
+            <div class="tp-checkout-bill-form">
+
+              <!-- nombre y apellidos -->
+              <div class="row">
+                <div class="col-md-6 mb-20">
+                  <label class="tp-checkout-bill-form-label mb-5">Nombre <span style="color:red;">*</span></label>
+                  <input type="text" [(ngModel)]="nombre" class="form-control"
+                    [class.is-invalid]="errores.nombre" placeholder="Tu nombre">
+                  <div *ngIf="errores.nombre" class="invalid-feedback">{{ errores.nombre }}</div>
+                </div>
+                <div class="col-md-6 mb-20">
+                  <label class="tp-checkout-bill-form-label mb-5">Apellidos <span style="color:red;">*</span></label>
+                  <input type="text" [(ngModel)]="apellidos" class="form-control"
+                    [class.is-invalid]="errores.apellidos" placeholder="Tus apellidos">
+                  <div *ngIf="errores.apellidos" class="invalid-feedback">{{ errores.apellidos }}</div>
+                </div>
+              </div>
+
+              <!-- teléfono -->
+              <div class="mb-20">
+                <label class="tp-checkout-bill-form-label mb-5">Teléfono <span style="color:red;">*</span></label>
+                <input type="text" [(ngModel)]="telefono" class="form-control"
+                  [class.is-invalid]="errores.telefono" placeholder="612 345 678">
+                <div *ngIf="errores.telefono" class="invalid-feedback">{{ errores.telefono }}</div>
+              </div>
+
+              <!-- dirección -->
+              <div class="mb-20">
+                <label class="tp-checkout-bill-form-label mb-5">Dirección <span style="color:red;">*</span></label>
+                <input type="text" [(ngModel)]="direccion" class="form-control"
+                  [class.is-invalid]="errores.direccion" placeholder="Calle, número, piso...">
+                <div *ngIf="errores.direccion" class="invalid-feedback">{{ errores.direccion }}</div>
+              </div>
+
+              <!-- ciudad, provincia y código postal -->
+              <div class="row">
+                <div class="col-md-5 mb-20">
+                  <label class="tp-checkout-bill-form-label mb-5">Ciudad <span style="color:red;">*</span></label>
+                  <input type="text" [(ngModel)]="ciudad" class="form-control"
+                    [class.is-invalid]="errores.ciudad" placeholder="Madrid">
+                  <div *ngIf="errores.ciudad" class="invalid-feedback">{{ errores.ciudad }}</div>
+                </div>
+                <div class="col-md-4 mb-20">
+                  <label class="tp-checkout-bill-form-label mb-5">Provincia</label>
+                  <input type="text" [(ngModel)]="provincia" class="form-control" placeholder="Madrid">
+                </div>
+                <div class="col-md-3 mb-20">
+                  <label class="tp-checkout-bill-form-label mb-5">Código postal <span style="color:red;">*</span></label>
+                  <input type="text" [(ngModel)]="codigoPostal" class="form-control"
+                    [class.is-invalid]="errores.codigoPostal" placeholder="28001">
+                  <div *ngIf="errores.codigoPostal" class="invalid-feedback">{{ errores.codigoPostal }}</div>
+                </div>
+              </div>
+
+              <!-- país -->
+              <div class="mb-20">
+                <label class="tp-checkout-bill-form-label mb-5">País</label>
+                <input type="text" [(ngModel)]="pais" class="form-control" placeholder="España">
+              </div>
+
+              <!-- notas adicionales -->
+              <div class="mb-30">
+                <label class="tp-checkout-bill-form-label mb-5">Notas del pedido (opcional)</label>
+                <textarea [(ngModel)]="notas" class="form-control" rows="3"
+                  placeholder="Instrucciones especiales para el envío..."></textarea>
+              </div>
+
+              <!-- método de pago -->
+              <h3 class="tp-checkout-bill-title mb-20" style="font-weight:700; font-size:1.3rem;">
+                Método de pago
+              </h3>
+
+              <div class="tp-checkout-payment mb-30">
+
+                <div class="tp-checkout-payment-item mb-10"
+                  style="border:1px solid #ddd; border-radius:6px; overflow:hidden;"
+                  [style.border-color]="metodoPago === 'tarjeta' ? '#821f40' : '#ddd'">
+                  <!-- cabecera del método tarjeta -->
+                  <div class="d-flex align-items-center gap-2 p-3" style="cursor:pointer;" (click)="metodoPago = 'tarjeta'">
+                    <input type="radio" name="pago" value="tarjeta" [(ngModel)]="metodoPago">
+                    <label style="cursor:pointer; margin:0;">
+                      <strong>Tarjeta de crédito / débito</strong>
+                      <span style="font-size:12px; color:#888; display:block;">Pago seguro con tarjeta</span>
+                    </label>
+                  </div>
+                  <!-- campo de tarjeta de Stripe — ocultamos con CSS en vez de *ngIf para que el div siempre esté en el DOM -->
+                  <div [style.display]="metodoPago === 'tarjeta' ? 'block' : 'none'" style="padding:0 14px 14px;">
+                    <div id="card-element" style="padding:12px; border:1px solid #eee; border-radius:4px; background:#fafafa; min-height:44px;"></div>
+                    <small style="color:#888; font-size:11px; margin-top:6px; display:block;">
+                      Puedes usar la tarjeta de prueba: 4242 4242 4242 4242 · cualquier fecha futura · cualquier CVV
+                    </small>
+                  </div>
+                </div>
+
+                <div class="tp-checkout-payment-item mb-10 d-flex align-items-center gap-2"
+                  style="padding:14px; border:1px solid #ddd; border-radius:6px; cursor:pointer;"
+                  [style.border-color]="metodoPago === 'transferencia' ? '#821f40' : '#ddd'"
+                  (click)="metodoPago = 'transferencia'">
+                  <input type="radio" name="pago" value="transferencia" [(ngModel)]="metodoPago">
+                  <label style="cursor:pointer; margin:0;">
+                    <strong>Transferencia bancaria</strong>
+                    <span style="font-size:12px; color:#888; display:block;">Recibirás los datos por email</span>
+                  </label>
+                </div>
+
+                <div class="tp-checkout-payment-item d-flex align-items-center gap-2"
+                  style="padding:14px; border:1px solid #ddd; border-radius:6px; cursor:pointer;"
+                  [style.border-color]="metodoPago === 'contrareembolso' ? '#821f40' : '#ddd'"
+                  (click)="metodoPago = 'contrareembolso'">
+                  <input type="radio" name="pago" value="contrareembolso" [(ngModel)]="metodoPago">
+                  <label style="cursor:pointer; margin:0;">
+                    <strong>Contrareembolso</strong>
+                    <span style="font-size:12px; color:#888; display:block;">Pago en efectivo al recibir el pedido</span>
+                  </label>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- resumen del pedido -->
+        <div class="col-lg-5">
+          <div class="tp-checkout-place" style="background:#f9f9f9; padding:30px; border-radius:8px; position:sticky; top:100px;">
+
+            <h3 class="mb-20" style="font-weight:700; font-size:1.2rem;">Tu pedido</h3>
+
+            <!-- listado de productos -->
+            <div class="tp-checkout-product-list mb-20">
+              <div *ngFor="let item of items" class="d-flex justify-content-between align-items-center mb-10"
+                style="padding-bottom:10px; border-bottom:1px solid #eee;">
+                <div class="d-flex align-items-center gap-2">
+                  <img [src]="item.image || 'assets/img/product/placeholder.jpg'"
+                    [alt]="item.title"
+                    style="width:50px; height:50px; object-fit:cover; border-radius:4px;">
+                  <div>
+                    <p style="margin:0; font-size:13px; font-weight:500;">{{ item.title }}</p>
+                    <span style="font-size:12px; color:#888;">x{{ item.quantity }}</span>
+                  </div>
+                </div>
+                <span style="font-weight:600;">{{ item.total }}€</span>
+              </div>
+            </div>
+
+            <!-- totales -->
+            <div class="d-flex justify-content-between mb-10">
+              <span>Subtotal</span>
+              <span>{{ total.toFixed(2) }}€</span>
+            </div>
+            <div class="d-flex justify-content-between mb-10">
+              <span>Envío</span>
+              <span style="color:green;">Gratis</span>
+            </div>
+            <hr>
+            <div class="d-flex justify-content-between mb-25" style="font-weight:700; font-size:1.1rem;">
+              <span>Total</span>
+              <span>{{ total.toFixed(2) }}€</span>
+            </div>
+
+            <!-- botón confirmar -->
+            <button (click)="confirmarPedido()" [disabled]="procesando || (metodoPago === 'tarjeta' && !cardLista)"
+              class="tp-btn w-100 text-center"
+              style="padding:16px; display:block; border:none; cursor:pointer; font-size:1rem;">
+              {{ procesando ? 'Procesando...' : 'Confirmar pedido' }}
+            </button>
+
+            <a [routerLink]="['/cart']" style="display:block; text-align:center; margin-top:12px; font-size:13px; color:#888;">
+              ← Volver al carrito
+            </a>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>

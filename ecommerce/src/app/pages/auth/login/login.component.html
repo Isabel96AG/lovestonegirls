@@ -65,21 +65,25 @@
               <div class="tp-login-input-wrapper">
 
                 <div class="tp-login-input-box">
-                  <div class="tp-login-input">
+                  <div class="tp-login-input" [class.is-invalid]="errores.email">
                     <input id="email" type="email" [(ngModel)]="email" name="email" placeholder="shofy@mail.com">
                   </div>
                   <div class="tp-login-input-title">
                     <label for="email">Your Email</label>
                   </div>
+                  <!-- mensaje de error si el email no es válido -->
+                  <small *ngIf="errores.email" style="color: #dc3545; font-size: 12px;">{{ errores.email }}</small>
                 </div>
 
                 <div class="tp-login-input-box">
-                  <div class="tp-login-input">
+                  <div class="tp-login-input" [class.is-invalid]="errores.password">
                     <input id="tp_password" type="password" [(ngModel)]="password" name="password" placeholder="Min. 8 character">
                   </div>
                   <div class="tp-login-input-title">
                     <label for="tp_password">Password</label>
                   </div>
+                  <!-- mensaje de error si la contraseña está vacía -->
+                  <small *ngIf="errores.password" style="color: #dc3545; font-size: 12px;">{{ errores.password }}</small>
                 </div>
 
               </div>
