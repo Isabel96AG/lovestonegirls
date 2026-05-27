@@ -22,7 +22,7 @@ export class SlidersService {
   }
 
   private headers() {
-    return new HttpHeaders({ 'Authorization': 'Bearer ' + this.authService.token });
+    return new HttpHeaders({ 'Authorization': 'Bearer ' + localStorage.getItem('token') });
   }
 
   listSliders() {
