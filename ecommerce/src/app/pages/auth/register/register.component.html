@@ -6,10 +6,10 @@
       <div class="row">
         <div class="col-xxl-12">
           <div class="breadcrumb__content p-relative z-index-1">
-            <h3 class="breadcrumb__title">Register Now</h3>
+            <h3 class="breadcrumb__title">Crear cuenta</h3>
             <div class="breadcrumb__list">
-              <span><a [routerLink]="['/']">Home</a></span>
-              <span>Register</span>
+              <span><a [routerLink]="['/']">Inicio</a></span>
+              <span>Registro</span>
             </div>
           </div>
         </div>
@@ -32,8 +32,8 @@
           <div class="tp-login-wrapper">
 
             <div class="tp-login-top text-center mb-30">
-              <h3 class="tp-login-title">Sign Up Shofy.</h3>
-              <p>Already have an account? <span><a [routerLink]="['/login']">Sign In</a></span></p>
+              <h3 class="tp-login-title">&#218;nete a LovestonedGirls.</h3>
+              <p>&#191;Ya tienes cuenta? <span><a [routerLink]="['/login']">Inicia sesi&#243;n</a></span></p>
             </div>
 
             <div class="tp-login-option">
@@ -69,7 +69,7 @@
                     <input id="name" type="text" placeholder="Nombre" [(ngModel)]="name" name="name">
                   </div>
                   <div class="tp-login-input-title">
-                    <label for="name">Your Name</label>
+                    <label for="name">Tu nombre</label>
                   </div>
                   <!-- error si el nombre no cumple los requisitos -->
                   <small *ngIf="errores.name" style="color: #dc3545; font-size: 12px;">{{ errores.name }}</small>
@@ -80,7 +80,7 @@
                     <input id="surname" type="text" placeholder="Apellido" [(ngModel)]="surname" name="surname">
                   </div>
                   <div class="tp-login-input-title">
-                    <label for="surname">Your Surname</label>
+                    <label for="surname">Tu apellido</label>
                   </div>
                   <!-- error si el apellido no cumple los requisitos -->
                   <small *ngIf="errores.surname" style="color: #dc3545; font-size: 12px;">{{ errores.surname }}</small>
@@ -88,10 +88,10 @@
 
                 <div class="tp-login-input-box">
                   <div class="tp-login-input" [class.is-invalid]="errores.email">
-                    <input id="email" type="email" placeholder="shofy@mail.com" [(ngModel)]="email" name="email">
+                    <input id="email" type="email" placeholder="tu@email.com" [(ngModel)]="email" name="email">
                   </div>
                   <div class="tp-login-input-title">
-                    <label for="email">Your Email</label>
+                    <label for="email">Tu email</label>
                   </div>
                   <!-- error si el email no tiene formato válido -->
                   <small *ngIf="errores.email" style="color: #dc3545; font-size: 12px;">{{ errores.email }}</small>
@@ -102,7 +102,7 @@
                     <input id="phone" type="text" placeholder="600123456" [(ngModel)]="phone" name="phone">
                   </div>
                   <div class="tp-login-input-title">
-                    <label for="phone">Your Phone</label>
+                    <label for="phone">Tu teléfono</label>
                   </div>
                   <!-- error si el teléfono no tiene 9 dígitos -->
                   <small *ngIf="errores.phone" style="color: #dc3545; font-size: 12px;">{{ errores.phone }}</small>
@@ -113,7 +113,7 @@
                     <input id="tp_password" type="password" placeholder="Min. 8 character" [(ngModel)]="password" name="password">
                   </div>
                   <div class="tp-login-input-title">
-                    <label for="tp_password">Password</label>
+                    <label for="tp_password">Contraseña</label>
                   </div>
                   <!-- error si la contraseña es demasiado corta -->
                   <small *ngIf="errores.password" style="color: #dc3545; font-size: 12px;">{{ errores.password }}</small>
@@ -124,12 +124,12 @@
               <div class="tp-login-suggetions d-sm-flex align-items-center justify-content-between mb-20">
                 <div class="tp-login-remeber">
                   <input id="remeber" type="checkbox">
-                  <label for="remeber">I accept the terms of the Service & <a href="#">Privacy Policy</a>.</label>
+                  <label for="remeber">Acepto los t&#233;rminos del servicio y la <a href="#">Pol&#237;tica de privacidad</a>.</label>
                 </div>
               </div>
 
               <div class="tp-login-bottom">
-                <button type="button" class="tp-login-btn w-100" (click)="register()">Sign Up</button>
+                <button type="button" class="tp-login-btn w-100" (click)="register()">Crear cuenta</button>
               </div>
 
             </div>

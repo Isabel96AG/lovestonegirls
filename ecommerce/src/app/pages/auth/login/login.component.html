@@ -6,10 +6,10 @@
       <div class="row">
         <div class="col-xxl-12">
           <div class="breadcrumb__content p-relative z-index-1">
-            <h3 class="breadcrumb__title">My account</h3>
+            <h3 class="breadcrumb__title">Mi cuenta</h3>
             <div class="breadcrumb__list">
-              <span><a [routerLink]="['/']">Home</a></span>
-              <span>My account</span>
+              <span><a [routerLink]="['/']">Inicio</a></span>
+              <span>Mi cuenta</span>
             </div>
           </div>
         </div>
@@ -32,8 +32,8 @@
           <div class="tp-login-wrapper">
 
             <div class="tp-login-top text-center mb-30">
-              <h3 class="tp-login-title">Login to Shofy.</h3>
-              <p>Don’t have an account? <span><a [routerLink]="['/register']">Create a free account</a></span></p>
+              <h3 class="tp-login-title">Inicia sesión en LovestonedGirls.</h3>
+              <p>&#191;No tienes cuenta? <span><a [routerLink]="['/register']">Crea una cuenta gratis</a></span></p>
             </div>
 
             <div class="tp-login-option">
@@ -66,10 +66,10 @@
 
                 <div class="tp-login-input-box">
                   <div class="tp-login-input" [class.is-invalid]="errores.email">
-                    <input id="email" type="email" [(ngModel)]="email" name="email" placeholder="shofy@mail.com">
+                    <input id="email" type="email" [(ngModel)]="email" name="email" placeholder="tu@email.com">
                   </div>
                   <div class="tp-login-input-title">
-                    <label for="email">Your Email</label>
+                    <label for="email">Tu email</label>
                   </div>
                   <!-- mensaje de error si el email no es válido -->
                   <small *ngIf="errores.email" style="color: #dc3545; font-size: 12px;">{{ errores.email }}</small>
@@ -80,7 +80,7 @@
                     <input id="tp_password" type="password" [(ngModel)]="password" name="password" placeholder="Min. 8 character">
                   </div>
                   <div class="tp-login-input-title">
-                    <label for="tp_password">Password</label>
+                    <label for="tp_password">Contraseña</label>
                   </div>
                   <!-- mensaje de error si la contraseña está vacía -->
                   <small *ngIf="errores.password" style="color: #dc3545; font-size: 12px;">{{ errores.password }}</small>
@@ -91,12 +91,12 @@
               <div class="tp-login-suggetions d-sm-flex align-items-center justify-content-between mb-20">
                 <div class="tp-login-remeber">
                   <input id="remeber" type="checkbox">
-                  <label for="remeber">Remember me</label>
+                  <label for="remeber">Recuérdame</label>
                 </div>
               </div>
 
               <div class="tp-login-bottom">
-                <button type="button" class="tp-login-btn w-100" (click)="login()">Login</button>
+                <button type="button" class="tp-login-btn w-100" (click)="login()">Iniciar sesión</button>
               </div>
 
             </div>
