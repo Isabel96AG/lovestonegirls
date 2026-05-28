@@ -16,6 +16,8 @@ services:
     build: ./api_ecommerce
     depends_on:
       - db
+    volumes:
+      - ./api_ecommerce/storage:/var/www/storage
     networks:
       - app
 
