@@ -71,7 +71,6 @@
                   <div class="tp-login-input-title">
                     <label for="name">Tu nombre</label>
                   </div>
-                  <!-- error si el nombre no cumple los requisitos -->
                   <small *ngIf="errores.name" style="color: #dc3545; font-size: 12px;">{{ errores.name }}</small>
                 </div>
 
@@ -82,7 +81,6 @@
                   <div class="tp-login-input-title">
                     <label for="surname">Tu apellido</label>
                   </div>
-                  <!-- error si el apellido no cumple los requisitos -->
                   <small *ngIf="errores.surname" style="color: #dc3545; font-size: 12px;">{{ errores.surname }}</small>
                 </div>
 
@@ -93,7 +91,6 @@
                   <div class="tp-login-input-title">
                     <label for="email">Tu email</label>
                   </div>
-                  <!-- error si el email no tiene formato válido -->
                   <small *ngIf="errores.email" style="color: #dc3545; font-size: 12px;">{{ errores.email }}</small>
                 </div>
 
@@ -104,7 +101,6 @@
                   <div class="tp-login-input-title">
                     <label for="phone">Tu teléfono</label>
                   </div>
-                  <!-- error si el teléfono no tiene 9 dígitos -->
                   <small *ngIf="errores.phone" style="color: #dc3545; font-size: 12px;">{{ errores.phone }}</small>
                 </div>
 
@@ -115,7 +111,6 @@
                   <div class="tp-login-input-title">
                     <label for="tp_password">Contraseña</label>
                   </div>
-                  <!-- error si la contraseña es demasiado corta -->
                   <small *ngIf="errores.password" style="color: #dc3545; font-size: 12px;">{{ errores.password }}</small>
                 </div>
 

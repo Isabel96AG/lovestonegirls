@@ -71,7 +71,6 @@
                   <div class="tp-login-input-title">
                     <label for="email">Tu email</label>
                   </div>
-                  <!-- mensaje de error si el email no es válido -->
                   <small *ngIf="errores.email" style="color: #dc3545; font-size: 12px;">{{ errores.email }}</small>
                 </div>
 
@@ -82,7 +81,6 @@
                   <div class="tp-login-input-title">
                     <label for="tp_password">Contraseña</label>
                   </div>
-                  <!-- mensaje de error si la contraseña está vacía -->
                   <small *ngIf="errores.password" style="color: #dc3545; font-size: 12px;">{{ errores.password }}</small>
                 </div>
 

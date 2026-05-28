@@ -88,8 +88,13 @@
                            [src]="producto.image || 'assets/img/product/placeholder.jpg'"
                            [alt]="producto.title"
                            style="width:100%; height:300px; object-fit:cover;"
+                           [style.opacity]="producto.sold_out ? '0.5' : '1'"
                         >
                      </a>
+                     <div *ngIf="producto.sold_out"
+                        style="position:absolute; top:10px; left:10px; background:#333; color:#fff; padding:4px 10px; font-size:12px; font-weight:600; border-radius:4px; letter-spacing:1px;">
+                        AGOTADO
+                     </div>
                      <div class="tp-product-action">
                         <div class="tp-product-action-item d-flex flex-column">
                            <a [routerLink]="['/product', producto.slug]" class="tp-product-action-btn tp-product-quick-view-btn">

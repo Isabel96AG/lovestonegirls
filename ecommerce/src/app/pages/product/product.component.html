@@ -116,12 +116,21 @@
                   <!-- botón añadir al carrito -->
                   <div class="mt-30 d-flex gap-3">
                      <button
+                        *ngIf="!producto.sold_out"
                         class="tp-btn w-100"
                         (click)="addToCart()"
                         [disabled]="agregando"
                         style="padding: 14px 30px; font-size: 15px;"
                      >
                         {{ agregando ? 'Añadiendo...' : 'Añadir al carrito' }}
+                     </button>
+                     <button
+                        *ngIf="producto.sold_out"
+                        class="tp-btn w-100"
+                        disabled
+                        style="padding: 14px 30px; font-size: 15px; opacity: 0.6; cursor: not-allowed; background: #999;"
+                     >
+                        Agotado
                      </button>
                   </div>
 
