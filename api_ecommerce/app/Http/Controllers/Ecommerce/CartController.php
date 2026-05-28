@@ -26,25 +26,21 @@ class CartController extends Controller
     {
         $user = auth('api')->user();
 
-        // si ya existe ese producto en el carrito, aumentar cantidad
+        // si ya existe ese producto en el carrito, no duplicar (pieza única)
         $existe = Cart::where('user_id', $user->id)
             ->where('product_id', $request->product_id)
             ->first();
 
         if ($existe) {
-            $existe->update([
-                'quantity' => $existe->quantity + $request->quantity,
-                'total'    => $existe->price_unit * ($existe->quantity + $request->quantity),
-            ]);
-            return response()->json(['message' => 200, 'cart' => $this->formatCart($existe->fresh('product'))]);
+            return response()->json(['message' => 200, 'cart' => $this->formatCart($existe->load('product'))]);
         }
 
         $cart = Cart::create([
             'user_id'    => $user->id,
             'product_id' => $request->product_id,
-            'quantity'   => $request->quantity ?? 1,
+            'quantity'   => 1,
             'price_unit' => $request->price_unit,
-            'total'      => $request->price_unit * ($request->quantity ?? 1),
+            'total'      => $request->price_unit,
             'variations' => $request->variations ?? null,
         ]);
 

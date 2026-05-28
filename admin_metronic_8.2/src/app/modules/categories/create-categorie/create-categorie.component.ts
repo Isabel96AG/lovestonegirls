@@ -36,8 +36,7 @@ export class CreateCategorieComponent implements OnInit {
         this.categories_first = resp.categories_first;
         this.categories_seconds = resp.categories_seconds;
       },
-      error: (err: any) => {
-        console.error('Error cargando config categorías:', err);
+      error: () => {
         this.toastr.error('Error', 'No se pudieron cargar las categorías');
       }
     });
@@ -50,7 +49,6 @@ export class CreateCategorieComponent implements OnInit {
     this.categories_seconds_filtered = [];
   }
 
-  // Al cambiar el departamento en nivel 3, filtra las categorías de segundo nivel
   changeDepartament() {
     this.categorie_second_id = '';
     this.categories_seconds_filtered = this.categories_seconds.filter(
@@ -112,7 +110,6 @@ export class CreateCategorieComponent implements OnInit {
         this.resetForm();
       },
       error: (err: any) => {
-        console.error('Error al guardar categoría:', err);
         this.toastr.error("Error " + (err?.status || ''), err?.error?.message || 'No se pudo guardar la categoría');
       }
     });

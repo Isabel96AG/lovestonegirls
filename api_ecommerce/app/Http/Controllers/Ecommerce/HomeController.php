@@ -64,7 +64,7 @@ class HomeController extends Controller
         $search = request('search', '');
         $categorie_id = request('categorie_id', null);
 
-        $query = Product::where('state', 2);
+        $query = Product::whereIn('state', [2, 3]);
 
         if ($search) {
             $query->where('title', 'like', '%' . $search . '%');
@@ -99,22 +99,23 @@ class HomeController extends Controller
         $product = Product::with(['images', 'variations.attribute', 'variations.propertie',
             'categorie_first', 'categorie_second', 'categorie_third'])
             ->where('slug', $slug)
-            ->where('state', 2)
+            ->whereIn('state', [2, 3])
             ->firstOrFail();
 
         return response()->json([
             'product' => [
-                'id' => $product->id,
-                'title' => $product->title,
-                'slug' => $product->slug,
-                'price' => $product->price,
-                'description' => $product->description,
-                'image' => $product->image ? asset('storage/' . $product->image) : null,
-                'images' => $product->images->map(fn($i) => asset('storage/' . $i->image)),
+                'id'              => $product->id,
+                'title'           => $product->title,
+                'slug'            => $product->slug,
+                'price'           => $product->price,
+                'description'     => $product->description,
+                'image'           => $product->image ? asset('storage/' . $product->image) : null,
+                'images'          => $product->images->map(fn($i) => asset('storage/' . $i->image)),
                 'categorie_first' => $product->categorie_first?->name,
-                'categorie_second' => $product->categorie_second?->name,
+                'categorie_second'=> $product->categorie_second?->name,
                 'categorie_third' => $product->categorie_third?->name,
-                'variations' => $product->variations->map(fn($v) => [
+                'sold_out'        => $product->state === 3,
+                'variations'      => $product->variations->map(fn($v) => [
                     'attribute' => $v->attribute?->name,
                     'propertie' => $v->propertie?->name,
                 ]),
@@ -125,11 +126,12 @@ class HomeController extends Controller
     private function formatProduct(Product $p)
     {
         return [
-            'id' => $p->id,
-            'title' => $p->title,
-            'slug' => $p->slug,
-            'price' => $p->price,
-            'image' => $p->image ? asset('storage/' . $p->image) : null,
+            'id'       => $p->id,
+            'title'    => $p->title,
+            'slug'     => $p->slug,
+            'price'    => $p->price,
+            'image'    => $p->image ? asset('storage/' . $p->image) : null,
+            'sold_out' => $p->state === 3,
         ];
     }
 }

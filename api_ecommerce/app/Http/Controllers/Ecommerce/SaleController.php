@@ -8,6 +8,7 @@ use App\Models\Sale\Sale;
 use App\Models\Sale\SaleAddress;
 use App\Models\Sale\SaleDetail;
 use App\Models\Sale\Cart as CartModel;
+use App\Models\Product\Product;
 use Stripe\Stripe;
 use Stripe\PaymentIntent;
 
@@ -122,6 +123,11 @@ class SaleController extends Controller
                 'total'      => $cart->total,
                 'discount'   => 0,
             ]);
+        }
+
+        // Marcar cada producto como vendido (pieza única)
+        foreach ($carts as $cart) {
+            Product::where('id', $cart->product_id)->update(['state' => 3]);
         }
 
         // Vaciamos el carrito una vez confirmado el pedido

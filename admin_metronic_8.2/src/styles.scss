@@ -32,3 +32,26 @@
 .toast-warning {
     background-color: #ffe1b6 !important;
 }
+
+@media print {
+  app-sidebar,
+  #kt_app_sidebar,
+  .app-sidebar,
+  app-header,
+  #kt_app_header,
+  .app-header,
+  .app-header-menu,
+  app-topbar,
+  .app-toolbar,
+  #kt_app_toolbar { display: none !important; }
+
+  #kt_app_content,
+  .app-content,
+  #kt_app_wrapper,
+  .app-wrapper {
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
+}

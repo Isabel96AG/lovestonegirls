@@ -1,0 +1,115 @@
+<div class="card" *ngIf="sale">
+  <div class="card-header border-0 pt-6 no-print">
+    <div class="d-flex align-items-center gap-3">
+      <button class="btn btn-light btn-sm" (click)="volver()">
+        <i class="ki-duotone ki-arrow-left fs-2"><span class="path1"></span><span class="path2"></span></i>
+        Volver
+      </button>
+      <h3 class="card-title mb-0">Pedido #{{ sale.id }}</h3>
+      <span class="badge fs-6 fw-bold ms-2"
+        [ngClass]="{
+          'badge-light-warning': sale.state === 'pendiente',
+          'badge-light-success': sale.state === 'enviado',
+          'badge-light-danger':  sale.state === 'cancelado'
+        }">
+        {{ sale.state }}
+      </span>
+    </div>
+    <div class="card-toolbar d-flex gap-2">
+      <button class="btn btn-light-primary btn-sm" (click)="imprimir()">
+        <i class="ki-duotone ki-printer fs-2"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
+        Imprimir ticket
+      </button>
+      <button class="btn btn-success btn-sm" *ngIf="sale.state !== 'enviado'" (click)="marcarEnviado()">
+        Marcar como enviado
+      </button>
+      <button class="btn btn-warning btn-sm" *ngIf="sale.state === 'enviado'" (click)="marcarPendiente()">
+        Marcar como pendiente
+      </button>
+    </div>
+  </div>
+
+  <div class="card-body py-4">
+    <div class="row g-4">
+
+      <div class="col-md-6">
+        <div class="card border h-100">
+          <div class="card-body">
+            <h5 class="fw-bold mb-3">Cliente</h5>
+            <p class="mb-1"><strong>Nombre:</strong> {{ sale.user?.name }}</p>
+            <p class="mb-0"><strong>Email:</strong> {{ sale.user?.email }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6" *ngIf="sale.address">
+        <div class="card border h-100">
+          <div class="card-body">
+            <h5 class="fw-bold mb-3">Dirección de envío</h5>
+            <p class="mb-1">{{ sale.address.name }} {{ sale.address.surname }}</p>
+            <p class="mb-1">{{ sale.address.address }}</p>
+            <p class="mb-1">{{ sale.address.postal_code }} {{ sale.address.city }}</p>
+            <p class="mb-1">{{ sale.address.country }}</p>
+            <p class="mb-0"><strong>Teléfono:</strong> {{ sale.address.phone }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="card border">
+          <div class="card-body">
+            <h5 class="fw-bold mb-3">Productos</h5>
+            <div class="table-responsive">
+              <table class="table align-middle fs-6 gy-3">
+                <thead>
+                  <tr class="text-muted fw-bold fs-7 text-uppercase">
+                    <th>Producto</th>
+                    <th class="text-center">Cantidad</th>
+                    <th class="text-end">Precio</th>
+                    <th class="text-end">Subtotal</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let detail of sale.details">
+                    <td>{{ detail.product?.title }}</td>
+                    <td class="text-center">{{ detail.quantity }}</td>
+                    <td class="text-end">{{ detail.price_unit }}€</td>
+                    <td class="text-end fw-bold">{{ detail.total }}€</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="3" class="text-end fw-bold fs-5">Total</td>
+                    <td class="text-end fw-bold fs-5 text-primary">{{ sale.total }}€</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card border">
+          <div class="card-body">
+            <h5 class="fw-bold mb-3">Pago</h5>
+            <p class="mb-1"><strong>Método:</strong> <span class="text-capitalize">{{ sale.method_payment }}</span></p>
+            <p class="mb-1" *ngIf="sale.n_transaccion"><strong>Transacción:</strong> {{ sale.n_transaccion }}</p>
+            <p class="mb-0"><strong>Fecha:</strong> {{ sale.created_at }}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="d-flex flex-column align-items-center justify-content-center py-10" *ngIf="!sale && !error">
+  <span class="spinner-border text-primary mb-3"></span>
+  <span class="text-muted">Cargando pedido #{{ saleId }}...</span>
+</div>
+
+<div class="alert alert-danger m-4" *ngIf="error">
+  {{ error }}
+  <button class="btn btn-sm btn-danger ms-3" (click)="volver()">Volver a pedidos</button>
+</div>

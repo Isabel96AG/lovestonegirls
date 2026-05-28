@@ -64,6 +64,18 @@ const Routing: Routes = [
     loadChildren: () => import('../modules/sliders/sliders.module').then((m) => m.SlidersModule),
   },
   {
+    path: 'sales',
+    loadChildren: () => import('../modules/sales/sales.module').then((m) => m.SalesModule),
+  },
+  {
+    path: 'newsletter',
+    loadChildren: () => import('../modules/newsletter/newsletter.module').then((m) => m.NewsletterModule),
+  },
+  {
+    path: 'admins',
+    loadChildren: () => import('../modules/admins/admins.module').then((m) => m.AdminsModule),
+  },
+  {
     path: '',
     redirectTo: '/dashboard',
     pathMatch: 'full',

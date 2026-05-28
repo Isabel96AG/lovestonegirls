@@ -5,17 +5,21 @@ use App\Http\Controllers\Admin\Product\CategorieController;
 use App\Http\Controllers\Admin\Product\ProductController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\EstadisticsController;
+use App\Http\Controllers\Admin\SaleController as AdminSaleController;
+use App\Http\Controllers\Admin\NewsletterController as AdminNewsletterController;
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Ecommerce\HomeController;
 use App\Http\Controllers\Ecommerce\CartController;
 use App\Http\Controllers\Ecommerce\SaleController;
+use App\Http\Controllers\Ecommerce\NewsletterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
     'prefix' => 'auth'
 ], function ($router) {
-    Route::post('/register', [AuthController::class, 'register'])->name('register');
+    Route::post('/register', [AuthController::class, 'register'])->middleware('auth:api')->name('register');
     Route::post('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/login_ecommerce', [AuthController::class, 'login_ecommerce'])->name('login_ecommerce');
     Route::post('/verified_auth', [AuthController::class, 'verified_auth'])->name('verified_auth');
@@ -44,6 +48,17 @@ Route::group([
     Route::resource("sliders", SliderController::class);
 
     Route::get("estadistics", [EstadisticsController::class, "index"]);
+
+    Route::get("sales", [AdminSaleController::class, "index"]);
+    Route::get("sales/{id}", [AdminSaleController::class, "show"]);
+    Route::put("sales/{id}", [AdminSaleController::class, "update"]);
+
+    Route::get("newsletter", [AdminNewsletterController::class, "index"]);
+    Route::delete("newsletter/{id}", [AdminNewsletterController::class, "destroy"]);
+
+    Route::get("admins", [AdminUserController::class, "index"]);
+    Route::post("admins", [AdminUserController::class, "store"]);
+    Route::delete("admins/{id}", [AdminUserController::class, "destroy"]);
 });
 
 // rutas publicas de la tienda
@@ -66,4 +81,6 @@ Route::prefix('ecommerce')->group(function () {
         Route::post('sales', [SaleController::class, 'store']);
         Route::get('sales/{id}', [SaleController::class, 'show']);
     });
+
+    Route::post('newsletter/subscribe', [NewsletterController::class, 'subscribe']);
 });

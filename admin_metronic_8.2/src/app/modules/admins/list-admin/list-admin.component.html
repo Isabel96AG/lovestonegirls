@@ -1,0 +1,118 @@
+<div class="card">
+  <div class="card-header border-0 pt-6">
+    <div class="card-title">
+      <h3 class="fw-bold">Administradores</h3>
+    </div>
+    <div class="card-toolbar">
+      <button class="btn btn-primary btn-sm" (click)="mostrarFormulario = !mostrarFormulario">
+        <i class="ki-duotone ki-plus fs-2"></i>
+        Nuevo administrador
+      </button>
+    </div>
+  </div>
+
+  <div class="card-body pb-0" *ngIf="mostrarFormulario">
+    <div class="card border border-dashed border-primary mb-6">
+      <div class="card-body p-6">
+        <h5 class="fw-bold mb-5">Crear nuevo administrador</h5>
+        <form [formGroup]="form" (ngSubmit)="guardar()">
+          <div class="row g-4">
+            <div class="col-md-6">
+              <label class="form-label required">Nombre</label>
+              <input type="text" class="form-control" formControlName="name" placeholder="Nombre">
+              <div class="text-danger fs-7 mt-1"
+                *ngIf="form.controls['name'].invalid && form.controls['name'].touched">
+                Mínimo 2 caracteres
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label required">Apellidos</label>
+              <input type="text" class="form-control" formControlName="surname" placeholder="Apellidos">
+              <div class="text-danger fs-7 mt-1"
+                *ngIf="form.controls['surname'].invalid && form.controls['surname'].touched">
+                Mínimo 2 caracteres
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label required">Email</label>
+              <input type="email" class="form-control" formControlName="email" placeholder="admin@ejemplo.com">
+              <div class="text-danger fs-7 mt-1"
+                *ngIf="form.controls['email'].invalid && form.controls['email'].touched">
+                Email no válido
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label required">Teléfono</label>
+              <input type="text" class="form-control" formControlName="phone" placeholder="600000000">
+              <div class="text-danger fs-7 mt-1"
+                *ngIf="form.controls['phone'].invalid && form.controls['phone'].touched">
+                9 dígitos
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label required">Contraseña</label>
+              <input type="password" class="form-control" formControlName="password" placeholder="Mínimo 8 caracteres">
+              <div class="text-danger fs-7 mt-1"
+                *ngIf="form.controls['password'].invalid && form.controls['password'].touched">
+                Mínimo 8 caracteres
+              </div>
+            </div>
+          </div>
+          <div class="d-flex gap-3 mt-6">
+            <button type="submit" class="btn btn-primary btn-sm" [disabled]="form.invalid || guardando">
+              {{ guardando ? 'Guardando...' : 'Crear administrador' }}
+            </button>
+            <button type="button" class="btn btn-light btn-sm" (click)="mostrarFormulario = false; form.reset()">
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body py-4">
+    <div class="table-responsive">
+      <table class="table align-middle table-row-dashed fs-6 gy-5">
+        <thead>
+          <tr class="text-start text-muted fw-bold fs-7 text-uppercase">
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Alta</th>
+            <th class="text-end">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="text-gray-600 fw-semibold">
+          <tr *ngFor="let admin of admins">
+            <td>
+              <div class="d-flex align-items-center gap-3">
+                <div class="symbol symbol-40px">
+                  <div class="symbol-label bg-light-danger text-danger fw-bold">
+                    {{ admin.name.charAt(0) }}
+                  </div>
+                </div>
+                <span class="fw-bold">{{ admin.name }}</span>
+              </div>
+            </td>
+            <td>{{ admin.email }}</td>
+            <td>{{ admin.phone }}</td>
+            <td class="text-muted">{{ admin.created_at }}</td>
+            <td class="text-end">
+              <button class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm"
+                (click)="eliminar(admin)" title="Eliminar acceso">
+                <i class="ki-duotone ki-trash fs-2">
+                  <span class="path1"></span><span class="path2"></span>
+                  <span class="path3"></span><span class="path4"></span><span class="path5"></span>
+                </i>
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="admins.length === 0">
+            <td colspan="5" class="text-center text-muted py-5">No hay administradores</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
