@@ -3,6 +3,7 @@ version: '3.8'
 services:
   db:
     image: mysql:8.0
+    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: ecommerce_2024
@@ -14,6 +15,7 @@ services:
 
   api:
     build: ./api_ecommerce
+    restart: unless-stopped
     depends_on:
       - db
     volumes:
@@ -23,16 +25,19 @@ services:
 
   ecommerce:
     build: ./ecommerce
+    restart: unless-stopped
     networks:
       - app
 
   admin:
     build: ./admin_metronic_8.2
+    restart: unless-stopped
     networks:
       - app
 
   proxy:
     image: nginx:alpine
+    restart: unless-stopped
     ports:
       - "80:80"
     volumes:
