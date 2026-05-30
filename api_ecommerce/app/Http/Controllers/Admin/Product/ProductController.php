@@ -62,7 +62,6 @@ class ProductController extends Controller
 
         $product = Product::create($data);
 
-        // guardar talla y color
         if ($request->variations) {
             $variations = json_decode($request->variations, true);
             foreach ($variations as $variation) {
@@ -124,7 +123,6 @@ class ProductController extends Controller
 
         $product->update($data);
 
-        // reemplazar variaciones
         if ($request->variations) {
             $product->variations()->delete();
             $variations = json_decode($request->variations, true);

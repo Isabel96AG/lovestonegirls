@@ -14,7 +14,6 @@ use Stripe\PaymentIntent;
 
 class SaleController extends Controller
 {
-    // Devuelve todos los pedidos del usuario logueado
     public function index()
     {
         $sales = Sale::where('user_id', auth('api')->id())
@@ -25,7 +24,6 @@ class SaleController extends Controller
         return response()->json(['sales' => $sales]);
     }
 
-    // Crea un nuevo pedido con los productos del carrito
     public function store(Request $request)
     {
         $request->validate([
@@ -40,39 +38,32 @@ class SaleController extends Controller
 
         $userId = auth('api')->id();
 
-        // Recogemos los items del carrito del usuario
         $carts = CartModel::where('user_id', $userId)->get();
 
         if ($carts->isEmpty()) {
             return response()->json(['error' => 'El carrito está vacío'], 400);
         }
 
-        // Calculamos el total del pedido sumando todos los items
         $subtotal = $carts->sum('total');
         $total    = $subtotal;
 
-        // Si el método de pago es tarjeta procesamos el cobro con Stripe
         if ($request->method_payment === 'tarjeta') {
 
-            // necesitamos el id del método de pago que nos manda Angular
             if (!$request->payment_method_id) {
                 return response()->json(['error' => 'Falta el método de pago de Stripe'], 400);
             }
 
-            // configuramos Stripe con nuestra clave secreta del .env
             Stripe::setApiKey(env('STRIPE_SECRET'));
 
             try {
-                // creamos un PaymentIntent — Stripe cobra el importe en céntimos
                 $intent = PaymentIntent::create([
-                    'amount'               => intval($total * 100), // Stripe usa céntimos
-                    'currency'             => 'eur',
-                    'payment_method'       => $request->payment_method_id,
-                    'confirm'              => true, // confirma el pago inmediatamente
-                    'return_url'           => 'http://localhost:4200/order-confirmation',
+                    'amount'         => intval($total * 100),
+                    'currency'       => 'eur',
+                    'payment_method' => $request->payment_method_id,
+                    'confirm'        => true,
+                    'return_url'     => 'http://localhost:4200/order-confirmation',
                 ]);
 
-                // si el pago no se completó devolvemos error
                 if ($intent->status !== 'succeeded') {
                     return response()->json(['error' => 'El pago no pudo completarse'], 400);
                 }
@@ -85,7 +76,6 @@ class SaleController extends Controller
             }
         }
 
-        // Creamos el pedido principal
         $sale = Sale::create([
             'user_id'          => $userId,
             'method_payment'   => $request->method_payment,
@@ -98,7 +88,6 @@ class SaleController extends Controller
             'state'            => 'pendiente',
         ]);
 
-        // Guardamos la dirección de envío
         SaleAddress::create([
             'sale_id'     => $sale->id,
             'name'        => $request->name,
@@ -112,7 +101,6 @@ class SaleController extends Controller
             'notes'       => $request->notes ?? '',
         ]);
 
-        // Guardamos cada producto del carrito como detalle del pedido
         foreach ($carts as $cart) {
             SaleDetail::create([
                 'sale_id'    => $sale->id,
@@ -125,12 +113,10 @@ class SaleController extends Controller
             ]);
         }
 
-        // Marcar cada producto como vendido (pieza única)
         foreach ($carts as $cart) {
             Product::where('id', $cart->product_id)->update(['state' => 3]);
         }
 
-        // Vaciamos el carrito una vez confirmado el pedido
         CartModel::where('user_id', $userId)->delete();
 
         return response()->json([
@@ -139,7 +125,6 @@ class SaleController extends Controller
         ], 201);
     }
 
-    // Devuelve el detalle de un pedido concreto
     public function show(int $id)
     {
         $sale = Sale::where('user_id', auth('api')->id())

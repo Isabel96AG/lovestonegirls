@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    // listar items del carrito del usuario
     public function index()
     {
         $user = auth('api')->user();
@@ -21,12 +20,10 @@ class CartController extends Controller
         return response()->json(['carts' => $carts]);
     }
 
-    // añadir producto al carrito
     public function store(Request $request)
     {
         $user = auth('api')->user();
 
-        // si ya existe ese producto en el carrito, no duplicar (pieza única)
         $existe = Cart::where('user_id', $user->id)
             ->where('product_id', $request->product_id)
             ->first();
@@ -47,7 +44,6 @@ class CartController extends Controller
         return response()->json(['message' => 200, 'cart' => $this->formatCart($cart->load('product'))]);
     }
 
-    // actualizar cantidad
     public function update(Request $request, string $id)
     {
         $cart = Cart::findOrFail($id);
@@ -59,14 +55,12 @@ class CartController extends Controller
         return response()->json(['message' => 200]);
     }
 
-    // eliminar un item
     public function destroy(string $id)
     {
         Cart::findOrFail($id)->delete();
         return response()->json(['message' => 200]);
     }
 
-    // vaciar carrito completo
     public function deleteAll()
     {
         $user = auth('api')->user();

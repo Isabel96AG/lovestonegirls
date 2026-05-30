@@ -20,19 +20,16 @@ class Sale extends Model
         'state',
     ];
 
-    // Un pedido pertenece a un usuario
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    // Un pedido tiene una dirección de envío
     public function address()
     {
         return $this->hasOne(SaleAddress::class);
     }
 
-    // Un pedido tiene varios productos
     public function details()
     {
         return $this->hasMany(SaleDetail::class);

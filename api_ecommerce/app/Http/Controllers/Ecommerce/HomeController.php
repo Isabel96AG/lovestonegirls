@@ -27,17 +27,14 @@ class HomeController extends Controller
             ->get()
             ->map(fn($p) => $this->formatProduct($p));
 
-        // nivel 1: Ropa, Accesorios...
         $categories = Categorie::whereNull('categorie_second_id')
             ->whereNull('categorie_third_id')
             ->get();
 
-        // nivel 2: Tops, Vestidos, Faldas...
         $categories_second = Categorie::whereNotNull('categorie_second_id')
             ->whereNull('categorie_third_id')
             ->get();
 
-        // nivel 3: Camisetas, Blusas...
         $categories_third = Categorie::whereNotNull('categorie_third_id')
             ->get();
 
@@ -71,7 +68,6 @@ class HomeController extends Controller
         }
 
         if ($categorie_id) {
-            // buscar también productos asignados a subcategorías de esta categoría
             $sub_ids = Categorie::where('categorie_second_id', $categorie_id)
                 ->orWhere('categorie_third_id', $categorie_id)
                 ->pluck('id')

@@ -11,9 +11,6 @@ use Illuminate\Support\Facades\Storage;
 
 class CategorieController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
         $search = $request->search;
@@ -24,7 +21,6 @@ class CategorieController extends Controller
             "categories" => CategorieCollection::make($categories),
         ]);
     }
-    // para conocer las de categorias de primer nivel y de segundo nivel. Se usa en el form de registro y de editar
     public function config()
     {
 
@@ -38,9 +34,6 @@ class CategorieController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $is_exists = Categorie::where("name", $request->name)->first();
@@ -59,9 +52,6 @@ class CategorieController extends Controller
         return response()->json(["message" => 200]);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $categorie = Categorie::findOrFail($id);
@@ -69,9 +59,6 @@ class CategorieController extends Controller
         return response()->json(["categorie" => CategorieResource::make($categorie)]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $is_exists = Categorie::where("id", "<>", $id)->where("name", $request->name)->first();
@@ -95,9 +82,6 @@ class CategorieController extends Controller
         return response()->json(["message" => 200]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $categorie = Categorie::findOrFail($id);

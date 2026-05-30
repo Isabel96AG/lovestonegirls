@@ -19,7 +19,6 @@ class SaleAddress extends Model
         'notes',
     ];
 
-    // La dirección pertenece a un pedido
     public function sale()
     {
         return $this->belongsTo(Sale::class);

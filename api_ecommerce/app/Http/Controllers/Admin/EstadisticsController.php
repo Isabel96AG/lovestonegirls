@@ -10,27 +10,18 @@ use Illuminate\Support\Facades\DB;
 
 class EstadisticsController extends Controller
 {
-    // devuelve todas las estadísticas del dashboard en una sola petición
     public function index()
     {
-        // --- KPIs principales ---
-
-        // total facturado hoy
         $hoy = Sale::whereDate('created_at', today())->sum('total');
 
-        // total facturado este mes
         $esteMes = Sale::whereMonth('created_at', now()->month)
             ->whereYear('created_at', now()->year)
             ->sum('total');
 
-        // total facturado este año
         $esteAnio = Sale::whereYear('created_at', now()->year)->sum('total');
 
-        // número de clientes que han comprado al menos una vez
         $totalClientes = Sale::distinct('user_id')->count('user_id');
 
-        // --- Ventas por mes (últimos 12 meses para el gráfico) ---
-        // agrupamos por mes y sumamos el total de ventas de cada mes
         $ventasPorMes = Sale::select(
                 DB::raw('MONTH(created_at) as mes'),
                 DB::raw('YEAR(created_at) as anio'),
@@ -42,8 +33,6 @@ class EstadisticsController extends Controller
             ->orderBy('mes')
             ->get();
 
-        // --- Productos más vendidos (top 5) ---
-        // sumamos las cantidades de sale_details agrupando por producto
         $productosMasVendidos = SaleDetail::select('product_id', DB::raw('SUM(quantity) as total_vendido'))
             ->with('product:id,title,image,price')
             ->groupBy('product_id')
@@ -57,8 +46,6 @@ class EstadisticsController extends Controller
                 'vendidos' => $d->total_vendido,
             ]);
 
-        // --- Últimos clientes que han comprado ---
-        // withCount y withSum cargan los totales en una sola query — así evitamos el N+1
         $clientes = User::whereHas('sales')
             ->withCount('sales')
             ->withSum('sales', 'total')

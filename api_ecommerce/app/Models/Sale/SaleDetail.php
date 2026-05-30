@@ -20,13 +20,11 @@ class SaleDetail extends Model
         'total',
     ];
 
-    // Cada línea de detalle pertenece a un pedido
     public function sale()
     {
         return $this->belongsTo(Sale::class);
     }
 
-    // Cada línea está asociada a un producto
     public function product()
     {
         return $this->belongsTo(Product::class);
