@@ -7,7 +7,6 @@ import { CartService } from '../../services/cart.service';
 import { SaleService } from '../../services/sale.service';
 import { loadStripe, Stripe, StripeCardElement } from '@stripe/stripe-js';
 
-// clave publicable de Stripe — esta sí puede estar en el frontend
 const STRIPE_PUBLIC_KEY = 'pk_test_51TVYzsEPvGrMiyxDxs0JgZf4X5KBUPIBcGQtvsc0tNDXTNFx4QyBELU3OSx4Sk2siKv32GJHPPoa21rOS7uuu2HS00WGlsIpVV';
 
 @Component({
